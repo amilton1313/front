@@ -19,6 +19,7 @@ import PoEmpreendimentoBlocos from '../cadastros/portal/PoEmpreendimentoBlocos'
 import PoEmpreendimentoUnidadePlantas from '../cadastros/portal/PoEmpreendimentoUnidadePlantas'
 import Intranet from '../intranet/Intranet'
 import Erp from '../erp/Erp'
+import Proposta from '../cadastros/propostas/Proposta'
 
 const Rotas = () => {
   return (
@@ -37,12 +38,15 @@ const Rotas = () => {
         {/* Empreendimento */}
         <Route exact path="/empreendimento/empreendimentosLista" component={EmpreendimentosLista} />
         <Route exact path="/empreendimentos" component={Empreendimentos} />
+        {/* Proposta */}
+        <Route exact path="/proposta" component={Proposta} />
         {/* Portal */}
         <Route exact path="/portal/poempreendimentoall" component={PoEmpreendimentoAll} />
         <Route exact path="/portal/poempreendimentoslista" component={PoEmpreendimentosLista} />
         <Route exact path="/portal/poempreendimentodoctos" component={PoEmpreendimentoDoctos} />
         <Route exact path="/portal/poempreendimentoblocos" component={PoEmpreendimentoBlocos} />
         <Route exact path="/portal/poempreendimentounidadeplantas" component={PoEmpreendimentoUnidadePlantas} />
+
       </Switch>
     </div>
   )

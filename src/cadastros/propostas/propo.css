@@ -1,0 +1,123 @@
+.p0 {
+    padding: 0;
+}
+
+.m0 {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+    margin-bottom: 0 !important;
+}
+
+.top0 {
+    margin-top: 0 !important;
+}
+
+.bot0 {
+    margin-bottom: 5px !important;
+}
+
+.cab {
+    height: 200px;
+    border: 1px solid black;
+}
+
+.cont {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+.lab {
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    min-width: 170px !important;
+}
+
+.bot {
+    margin: 0 5px 5px 0 !important;
+}
+
+.gr {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+.left_sidebar {
+    background-color:rgb(185, 184, 184) !important;
+    position: fixed;
+    width: 40em;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    transition: all ease 0.5s;
+    border-radius: 1%;
+    padding: 10px;
+}
+
+.left_sidebar-show {
+    transform: translateX(0);
+
+}
+
+.left_sidebar-hide {
+    transform: translateX(-40em);
+}
+
+.linha {
+    padding-left: 10px;
+}
+
+.linha:hover {
+    background-color: steelblue;
+    color: white
+}
+
+.mostrar-div1 {
+    background-color: gray;
+    height: 50px;
+    padding: 6px;
+    border-radius: 1%;
+    color: white;
+}
+
+.mostrar-list {
+    overflow: auto;
+    max-height: 500px;
+    background-color: white;
+}
+
+.div-unidades-1 {
+    width: 200px; 
+    background-color: gray;
+    color: white;
+    border-right: 1px solid white;
+    padding-left: 5px;
+    line-height: 2rem;
+}
+
+.div-unidades-2 {
+    width: 100px; 
+    background-color: gray;
+    color: white;
+    border-right: 1px solid white;
+    padding-left: 5px;
+    line-height: 2rem;
+}
+
+.div-unidades-3 {
+    width: 200px; 
+    border-right: 1px solid white;
+    padding-left: 5px;
+    line-height: 40px;
+}
+
+.div-unidades-4 {
+    width: 100px; 
+    border-right: 1px solid white;
+    padding-left: 5px;
+    line-height: 40px;
+}
+
+
