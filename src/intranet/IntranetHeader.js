@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
 
 import '../css/headerIntranet.css'
-import logo from '../img/logo-intra.jpg'
+import logo from '../img/logo-intra.png'
 import botaoMenu from '../img/botao-menu.png'
+import predios from '../img/predios.png'
 import { Link } from 'react-router-dom'
 
 const IntranetHeader = () => {
@@ -11,21 +12,23 @@ const IntranetHeader = () => {
     return (
         <Fragment>
 
-            <div style={{background: '#CAE1FF'}}>
-                <nav class="navbar navbar-custom navbar-expand-lg  text-light" 
+            <div style={{ background: 'LightGray' }}>
+                {/* <div style={{backgroundImage: 'url({predios})'}}> */}
+                <nav class="navbar navbar-custom navbar-expand-lg  text-dark"
                     style={{ borderRadius: '5px' }}>
-                    <a className="navbar-brand text-light" href="#">
-                        <img src={logo} alt="" className="logo-intra"/>
-                        </a>
-                    <button className="navbar-toggler" style={{outline: 'none'}} type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <span ><span className="navbar-toggler-icon container-botao-menu" style={{display: 'flex', justifyContent: 'center'}}><img className="botao-menu" src={botaoMenu} /></span></span>
+                    <a className="navbar-brand text-dark" href="#">
+                        <img src={logo} alt="" className="logo-intra" />
+                    </a>
+                    <button className="navbar-toggler" style={{ outline: 'none' }} type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                        {/* <span ><span className="navbar-toggler-icon container-botao-menu" style={{ display: 'flex', justifyContent: 'center' }}><img className="botao-menu" src={botaoMenu} /></span></span> */}
+                        <span ><span className="navbar-toggler-icon container-botao-menu d-flex justify-content-center"><i className="fas fa-bars" style={{ fontSize: '1.5rem' }}></i></span></span>
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Empreendimentos</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Empreendimentos</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">America Officenter</a>
                                     <a class="dropdown-item" href="#">City Office Square</a>
@@ -50,7 +53,7 @@ const IntranetHeader = () => {
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Administrativo</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Administrativo</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#" target="_blank">Organograma</a>
                                     <a class="dropdown-item" href="#" target="_blank">Manual de Funções</a>
@@ -59,7 +62,7 @@ const IntranetHeader = () => {
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Notícias</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Notícias</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="https://www.globo.com" target="_blank">Globo</a>
                                     <a class="dropdown-item" href="https://oglobo.globo.com" target="_blank">Jornal O Globo</a>
@@ -79,7 +82,7 @@ const IntranetHeader = () => {
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Bancos</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Bancos</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="http://www.bradesco.com.br" target="_blank">Bradesco</a>
                                     <a class="dropdown-item" href="http://www.bb.com.br" target="_blank">Banco do Brasil</a>
@@ -91,11 +94,12 @@ const IntranetHeader = () => {
                                     <a class="dropdown-item" href="http://www.credicard.com.br/home/default.htm" target="_blank">Credicard</a>
                                     <a class="dropdown-item" href="http://www.itau.com.br/empresas" target="_blank">Itau</a>
                                     <a class="dropdown-item" href="http://www.bancointer.com.br" target="_blank">Inter</a>
+                                    <a class="dropdown-item" href="https://www.sicredi.com.br" target="_blank">Sicredi</a>
                                 </div>
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Órgãos Públicos</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Órgãos Públicos</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="http://www.presidencia.gov.br" target="_blank">Presidência - Planalto</a>
                                     <a class="dropdown-item" href="http://www.jfsc.gov.br" target="_blank">Tribunal de Justiça Federal - SC</a>
@@ -112,7 +116,7 @@ const IntranetHeader = () => {
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button">Sites Úteis</a>
+                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#" role="button">Sites Úteis</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="http://www.financiamento.com.br/simulador/" target="_blank">Simulador de Financiamento</a>
                                     <a class="dropdown-item" href="http://www.buscacep.correios.com.br" target="_blank">CEP</a>
@@ -120,29 +124,31 @@ const IntranetHeader = () => {
                                     <a class="dropdown-item" href="http://www.crea-sc.org.br" target="_blank">CREA</a>
                                     <a class="dropdown-item" href="http://www.google.com.br" target="_blank">Google</a>
                                     <a class="dropdown-item" href="http://www.horariodebrasilia.org" target="_blank">Horário Oficial do Brasil</a>
+                                    <a class="dropdown-item" href="https://www.codigobanco.com" target="_blank">Código do Banco</a>
                                 </div>
                             </li>
 
                             <li class="nav-item">
 
 
-            <Link to={"/erp"} class="nav-link text-light" >
-                Sistema
+                                <Link to={"/erp"} class="nav-link text-dark" >
+                                    Sistema
             </Link>
                             </li>
 
 
                         </ul>
 
-                        
+
                     </div>
                 </nav>
-                
+
+                {/* <div className="navbar-rodape">
+                     </div>            */}
             </div>
 
 
 
-            
         </Fragment>
     )
 }

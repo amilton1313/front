@@ -5,8 +5,9 @@ import Login from "../login/Login"
 import LoginCpf from "../login/LoginCpf"
 import PessoasLista from "../pessoa/PessoasLista"
 import PrincipalMenu from "../principal/PrincipalMenu"
+import PoEmpreendimentosLista from '../../cadastros/portal/PoEmpreendimentosLista'
 
-
+import './principal.css'
 
 const Principal = () => {
 
@@ -15,6 +16,7 @@ const Principal = () => {
     return (
         <div>
             <PrincipalMenu />
+            {/* <PoEmpreendimentosLista /> */}
         </div>
     )
 }

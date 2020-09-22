@@ -1,0 +1,126 @@
+
+/* **********  Lista de Empreendimentos  *********** */
+
+.tab-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.tab-linha {
+    display: flex;
+    margin-left: 10px;
+    border-bottom: 1px solid grey;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.tab-linha:hover {
+    background: lightgrey;
+}
+
+.tab-linha-cab {
+    display: flex;
+    margin-left: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: rgb(88, 88, 88);
+    color: white;
+}
+
+.cel01 {
+    padding: 5px 10px;
+    flex: 1;
+    text-align: center;
+}
+
+.cel02 {
+    padding: 5px 10px;
+    flex: 20;
+    text-align: left;
+}
+
+.tab-linha-botao {
+    padding: 5px 10px;
+    flex: 3;
+    text-align: center;
+    align-items: center;
+}
+
+.tab-linha-botao a {
+    text-decoration: none;
+    color: rgb(88, 88, 88);
+}
+
+.tab-linha-botao a:hover {
+    font-weight: bold;
+}
+
+.loc-label {
+    padding: 10px;
+    width: 10%;
+}
+
+.loc-input {
+    width: 90%;
+}
+
+
+/* ************   Documentos do Empreendimento   ********* */
+
+.linha-doc {
+    padding: 10px;
+    border-bottom: none;
+    /* border-top: 1px solid grey; */
+}
+
+.linha-doc-ultima {
+    border-bottom: 1px solid grey;
+    margin-left: 10px;
+}
+
+.doc-titulo {
+    margin: 30px 10px 10px 10px;
+}
+
+.doc-subtitulo {
+    margin: 0px 10px 30px 10px;
+}
+
+.tab-linha a {
+    text-decoration: none;
+    color: rgb(88, 88, 88);
+}
+
+.tab-linha a:hover {
+    font-weight: bold;
+}
+
+
+
+.linha-und {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.linha-und:hover {
+    background: lightgrey;
+}
+
+.linha-und a {
+    text-decoration: none;
+}
+
+@media(max-width: 800px) {
+    .tab-container {
+        width: 100%;
+    }
+
+    .loc-label {
+        padding: 10px;
+        width: 20%;
+    }
+    
+    .loc-input {
+        width: 80%;
+    }
+}

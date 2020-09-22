@@ -14,8 +14,8 @@ const Entrada = () => {
     return (<div>
         {auth ? (
             <div>
-                {/* <Principal /> */}
-                <EmBreve />
+                <Principal />
+                {/* <EmBreve /> */}
             </div>
         ) : (
             <div>

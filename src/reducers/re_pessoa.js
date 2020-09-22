@@ -9,7 +9,10 @@ import {
     PESSOA_DADOS_INCLUSAO_ERRO,
 
     PESSOA_DADOS_CNPJ_EXITO,
-    PESSOA_DADOS_CNPJ_ERRO
+    PESSOA_DADOS_CNPJ_ERRO,
+
+    PESSOA_COMPLETA_EXITO,
+    PESSOA_COMPLETA_ERRO
 
 } from '../types/ty_pessoas_dados'
 
@@ -80,6 +83,20 @@ export default function (state = initialState, action) {
             }      
             
         case PESSOA_DADOS_CNPJ_ERRO:
+            return {
+                ...state,
+                pessoa: {},
+                error: true,
+            }
+
+            case PESSOA_COMPLETA_EXITO:
+                console.log('dentro do reducer')
+            return {
+                ...state,
+                pessoa: action.payload
+            }      
+            
+        case PESSOA_COMPLETA_ERRO:
             return {
                 ...state,
                 pessoa: {},

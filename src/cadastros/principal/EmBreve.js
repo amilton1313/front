@@ -7,7 +7,7 @@ const EmBreve = () => {
         <div style={{ height: '100vh' }}
             className="d-flex flex-column justify-content-center align-items-center"
         >
-            <img src={Logo} alt="" className="w-50" />
+            <img src={Logo} alt="" className="w-50 h-50"/>
 
             <h1>Sistema COTA</h1>
             <h3>(Em breve)</h3>

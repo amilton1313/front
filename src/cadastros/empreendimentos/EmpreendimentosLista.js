@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal'
+
 
 
 import { ac_obterEmpreendimentos, ac_descargaEmpreendimentosFiltrado } from '../../actions/ac_empreendimento'
@@ -122,14 +120,24 @@ const EmpreendimentosLista = ({ history }) => {
                     {empreendimentos.map(empreendimento => (
 
                         <tr
-                            onClick={() => {
-                                mostrarSelecionado(empreendimento.nome)
-                                history.push(`/dados/editar/${empreendimento.id_empreendimento}`)
-                            }}
+                            // onClick={() => {
+                            //     mostrarSelecionado(empreendimento.nome)
+                            //     history.push(`/dados/editar/${empreendimento.id_empreendimento}`)
+                            // }}
                         >
 
                             <td>{empreendimento.id_empreendimento}</td>
                             <td>{empreendimento.nome}</td>
+                            <td><Link to={{
+                                pathname: "/portal/poempreendimentodoctos",
+                                state : {
+                                    id_empreendimento: empreendimento.id_empreendimento,
+                                    nomeEmpreendimento: empreendimento.nome 
+                                }
+                                }} 
+                                className="btn btn-primary"
+                                >Doctos</Link></td>
+                            <td><Link to={"/"} className="btn btn-primary" >Unids</Link></td>
                         </tr>
 
                     ))}

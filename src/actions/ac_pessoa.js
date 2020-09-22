@@ -10,7 +10,10 @@ import {
     PESSOA_DADOS_INCLUSAO_ERRO,
 
     PESSOA_DADOS_CNPJ_EXITO,
-    PESSOA_DADOS_CNPJ_ERRO
+    PESSOA_DADOS_CNPJ_ERRO,
+
+    PESSOA_COMPLETA_EXITO,
+    PESSOA_COMPLETA_ERRO
 
 } from '../types/ty_pessoas_dados'
 
@@ -105,7 +108,6 @@ export const obterPessoaDadosCnpj_erro = () => ({
 //
 
 export const ac_obterPessoasDados = token => {
-
     return (dispatch) => {
         dispatch(ac_obterProductosComeco())
 
@@ -120,6 +122,31 @@ export const ac_obterPessoasDados = token => {
             })
     }
 }
+
+export function ac_obterPessoaCompleta (token, id)  {
+    return (dispatch) => {
+        clienteAxios.get(`/pessoacompleta/${id}`, {
+            headers: { Authorization: token }
+        })
+            .then(resposta => {
+                dispatch(obterPessoaCompleta_exito(resposta.data[0]))
+
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(obterPessoaCompleta_erro())
+            })
+    }
+}
+
+export const obterPessoaCompleta_exito = pessoa => ({
+    type: PESSOA_COMPLETA_EXITO,
+    payload: pessoa
+})
+
+export const obterPessoaCompleta_erro = () => ({
+    type: PESSOA_COMPLETA_ERRO
+})
 
 export const ac_obterProductosComeco = error => ({
     type: PESSOA_DADOS_DESCARGA_INICIO,

@@ -16,7 +16,8 @@ const Empreend_Ramais = () => {
                     marginBottom: '4px',
                     fontWeigt: 'bold',
                     marginTop: '0',
-                    justifyContent: 'flex-start'
+                    justifyContent: 'flex-start',
+                    color: 'white'
                 }}
                 onClick={() => xMostrar(!mostrar)}
             
@@ -31,8 +32,6 @@ const Empreend_Ramais = () => {
                             <li class="list-group-item">248 - Aline</li>
                             <li class="list-group-item">252 - Amilton</li>
                             <li class="list-group-item">208 - Antônio</li>
-                            <li class="list-group-item">221 - Atiradores</li>
-                            <li class="list-group-item">222 - Canteiro</li>
                             <li class="list-group-item">203 - Cinira</li>
                             <li class="list-group-item">224 - Copa</li>
                             <li class="list-group-item">209 - David</li>
@@ -41,8 +40,10 @@ const Empreend_Ramais = () => {
                             <li class="list-group-item">239 - Grasy</li>
                             <li class="list-group-item">201 - Heliane</li>
                             <li class="list-group-item">211 - Liliane</li>
-                            <li class="list-group-item">206 - Lineide</li>
+                            <li class="list-group-item">&nbsp;&nbsp;9 - Luize</li>
+                            <li class="list-group-item">246 - Marco</li>
                             <li class="list-group-item">212 - Paulão</li>
+                            <li class="list-group-item">213 - Paulão (ao lado)</li>
                             <li class="list-group-item">250 - Rubens</li>
                             <li class="list-group-item">214 - S. Reuniões</li>
                             <li class="list-group-item">255 - Sueli</li>
