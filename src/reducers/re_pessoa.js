@@ -12,7 +12,13 @@ import {
     PESSOA_DADOS_CNPJ_ERRO,
 
     PESSOA_COMPLETA_EXITO,
-    PESSOA_COMPLETA_ERRO
+    PESSOA_COMPLETA_ERRO,
+
+    PESSOA_IDNOME_EXITO,
+    PESSOA_IDNOME_ERRO,
+
+    IMOBILIARIAS_EXITO,
+    IMOBILIARIAS_ERRO
 
 } from '../types/ty_pessoas_dados'
 
@@ -21,7 +27,8 @@ const initialState = {
     pessoasFull: [],
     error: null,
     loading: false,
-    pessoa: {}
+    pessoa: {},
+    imobiliarias: []
 }
 
 export default function (state = initialState, action) {
@@ -102,6 +109,28 @@ export default function (state = initialState, action) {
                 pessoa: {},
                 error: true,
             }
+
+        case PESSOA_IDNOME_EXITO:
+            return {
+                pessoas: action.payload
+            }
+
+        case PESSOA_IDNOME_ERRO:
+            return {
+                pessoas: {},
+                error: true,
+            }
+
+        case IMOBILIARIAS_EXITO:
+            return {
+                imobiliarias: action.payload
+            }
+
+        case IMOBILIARIAS_ERRO:
+            return {
+                imobiliarias: {},
+                error: true,
+                }
         
         default:
             return state

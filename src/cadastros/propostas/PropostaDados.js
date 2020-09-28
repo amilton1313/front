@@ -1,83 +1,127 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import clienteAxios from '../../config/axios'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, Row, Col, Button, Jumbotron } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus, faPlus, faFolderOpen, faBackspace } from '@fortawesome/free-solid-svg-icons'
 import './propo.css'
 
 import PropostaImobiliaria from './PropostaImobiliaria'
 import PropostaCorretor from './PropostaCorretor'
 import PropostaProponente from './PropostaProponente'
 import PropostaInterveniente from './PropostaInterveniente'
-import tabelasVendas from './lista-de-tabelas-vendas'
+
+import { ac_getPropostaById } from '../../actions/ac_proposta'
+import { ac_getPessoaIdNome } from '../../actions/ac_pessoa'
 
 
-
+import { PropostaContext } from './Proposta'
 
 const PropostaDados = () => {
 
-    const placement = 'xxx'
+    const { proposta, pessoas, imobiliarias, getPessoas,
+        id_proposta, setId_proposta, data, setData,
+        idImobiliaria, setIdImobiliaria, nomeImobiliaria, setNomeImobiliaria,
+        idCorretor, setIdCorretor, nomeCorretor, setNomeCorretor,
+        idProponente, setIdProponente, nomeProponente, setNomeProponente,
+        idInterveniente, setIdInterveniente, nomeInterveniente, setNomeInterveniente,
+        idLocalCaptacao, setIdLocalCaptacao, nomeLocalCaptacao, setNomeLocalCaptacao,
+        observacoes, setObservacoes
+    } = useContext(PropostaContext)
+
+    const dispatch = useDispatch()
 
     const unidades = [
         { id_unidade: 34, blocox: 'Aurora', numero: '404', garagensx: '25 e 36', depositosx: '65 e 21' },
         { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
     ]
 
-    const [idProposta, setIdProposta] = useState(3606)
-    const [data, setData] = useState('10/09/2020')
-
-
-    const [idImobiliaria, setIdImobiliaria] = useState(null)
-    const [nomeImobiliaria, setNomeImobiliaria] = useState('')
-
-    const [idCorretor, setIdCorretor] = useState(null)
-    const [nomeCorretor, setNomeCorretor] = useState('')
-    const [exibirModalCorretor, setExibirModalCorretor] = useState(false)
-    const [exibirBotoesCorretor, setExibirBotoesCorretor] = useState(false)
-
-    const [idEmpreendimento, setIdEmpreendimento] = useState(null)
-    const [nomeEmpreendimento, setNomeEmpreendimento] = useState('')
-    const [exibirModalEmpreendimento, setExibirModalEmpreendimento] = useState(false)
-    const [exibirBotoesEmpreendimento, setExibirBotoesEmpreendimento] = useState(false)
-
-    const [idTabVenda, setIdTabVenda] = useState(null)
-    const [nomeTabVenda, setNomeTabVenda] = useState('')
-    const [exibirModalTabVendas, setExibirModalTabVendas] = useState(false)
-    const [exibirBotoesTabVendas, setExibirBotoesTabVendas] = useState(false)
-
-    const [idProponente, setIdProponente] = useState(null)
-    const [nomeProponente, setNomeProponente] = useState('')
-    const [exibirModalProponente, setExibirModalProponente] = useState(false)
-    const [exibirBotoesProponente, setExibirBotoesProponente] = useState(false)
-
-    const [idInterveniente, setIdInterveniente] = useState(null)
-    const [nomeInterveniente, setNomeInterveniente] = useState('')
-    const [exibirModalInterveniente, setExibirModalInterveniente] = useState(false)
-    const [exibirBotoesInterveniente, setExibirBotoesInterveniente] = useState(false)
-
-    const [idLocalCaptacao, setIdLocalCaptacao] = useState(null)
-    const [nomeLocalCaptacao, setNomeLocalCaptacao] = useState('')
-    const [exibirModalLocaisCaptacao, setExibirModalLocaisCaptacao] = useState(false)
-    const [exibirBotoesLocaisCaptacao, setExibirBotoesLocaisCaptacao] = useState(false)
-
-    const [mensagem, setMensagem] = ['xxxxxxxxxxxxx']
-
-
-    const handleExibirModalImobiliarias = () => {
-        // setExibirModalImobiliaria(true)
-    }
+    useEffect(() => {
+        const id = idImobiliaria
+        const no = getNome(id)
+        setNomeImobiliaria(no)    
+    }, [idImobiliaria])
 
     useEffect(() => {
-        if (!idImobiliaria) { setNomeImobiliaria('') }
-        if (!idCorretor) { setNomeCorretor('') }
-        if (!idProponente) { setNomeProponente('') }
-        if (!idInterveniente) { setNomeInterveniente('') }
-    }, [idImobiliaria, idCorretor, idProponente, idInterveniente])
+        const id = idCorretor
+        const no = getNome(id)
+        setNomeCorretor(no)
+    }, [idCorretor])
+
+    useEffect(() => {
+        const id = idProponente
+        const no = getNome(id)
+        setNomeProponente(no)
+    }, [idProponente])
+
+    useEffect(() => {
+        const id = idInterveniente
+        const no = getNome(id)
+        setNomeInterveniente(no)
+    }, [idInterveniente])
+
+    const getNome = (id) => {
+        if (id === null) return ''
+        const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
+        const nom = pessoa[0] ? pessoa[0] : {}
+        return nom.nome
+    }
+
+    const handleLocalCaptacao = event => {
+        setIdLocalCaptacao(event.target.value)
+      }
+
+    const handleObservacoes = event => {
+        setObservacoes(event.target.value)
+      }
+
+
+
+    const salvarDados = () => {
+        const prop = {
+            data: data,
+            id_imobiliaria: idImobiliaria,
+            id_corretor: idCorretor,
+            id_proponente: idProponente,
+            id_interveniente: idInterveniente,
+            id_localcaptacao: idLocalCaptacao,
+            observacoes: observacoes
+        }
+        console.log('salvando dados...', prop)
+
+        clienteAxios.put(`/proposta/${1545}`, prop)
+            .then(resposta => {
+                // setEmpreendimentos(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    // const getNome = (id,pessoas) => {
+    //     console.log('pessoas >>>>>>>>', pessoas)
+    //     return new Promise((resolve) => {
+    //         const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
+    //         const nom = pessoa[0] ? pessoa[0] : {}
+    //         console.log('no imocbiliaria >>xx>>', id, ' - ', pessoa)
+    //         resolve(nom.nome)
+    //     })
+    // }
+
+    // console.log('pessoas >>>', pessoas)
+
+    
+
+    //     const getNome = (id) => {
+    //     if (id === null) return ''
+    //     const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
+    //     const nom = pessoa[0] ? pessoa[0] : {}
+    //     return nom.nome
+    // }
 
     return (
         <>
             <Jumbotron
                 fluid
-                style={{ paddingTop: '10px' }}
+                style={{ paddingTop: '10px', borderRadius: '1%' }}
             >
 
                 <Form noValidate style={{ margin: '10px' }}>
@@ -91,12 +135,11 @@ const PropostaDados = () => {
                                 type="text"
                                 name="numero"
                                 className="cont"
-                                value={idProposta}
-                                readonly
+                                value={id_proposta}
+                                readOnly
                             />
                         </Col>
                     </Form.Group>
-
 
                     {/* Data */}
                     <Form.Group as={Row} className="gr">
@@ -107,7 +150,7 @@ const PropostaDados = () => {
                                 name="data"
                                 className="cont"
                                 value={data}
-                                readonly
+                                readOnly
                             />
                         </Col>
 
@@ -115,36 +158,18 @@ const PropostaDados = () => {
 
 
                     {/* Imobiliaria */}
-                    <PropostaImobiliaria
-                        setIdImobiliaria={setIdImobiliaria}
-                        setNomeImobiliaria={setNomeImobiliaria}
-                        nomeImobiliaria={nomeImobiliaria}
-                        mensagem={mensagem}
-                        setMensagem={setMensagem}
-                    />
+                    <PropostaImobiliaria />
 
 
                     {/* Corretor */}
-                    <PropostaCorretor
-                        setIdCorretor={setIdCorretor}
-                        setNomeCorretor={setNomeCorretor}
-                        nomeCorretor={nomeCorretor}
-                    />
+                    <PropostaCorretor />
 
                     {/* Proponente */}
-                    <PropostaProponente
-                        setIdProponente={setIdProponente}
-                        setNomeProponente={setNomeProponente}
-                        nomeProponente={nomeProponente}
-                    />
+                    <PropostaProponente />
 
 
                     {/* Interveniente */}
-                    <PropostaInterveniente
-                        setIdInterveniente={setIdInterveniente}
-                        setNomeInterveniente={setNomeInterveniente}
-                        nomeInterveniente={nomeInterveniente}
-                    />
+                    <PropostaInterveniente />
 
 
                     {/* Local da Captacao */}
@@ -154,13 +179,18 @@ const PropostaDados = () => {
                     >
                         <Form.Label column sm={2} className="lab">Local da Captação : </Form.Label>
                         <Col sm={5}>
-                            <Form.Control as="select" name="id_tabela" className="cont">
+                            <Form.Control as="select" 
+                                name="id_tabela" 
+                                className="cont"
+                                value={idLocalCaptacao}
+                                onChange={handleLocalCaptacao}
+                            >
                                 <option value={1}>PLANTÃO / LOJA DE VENDAS</option>
                                 <option value={2}>SALÃO DO IMÓVEL</option>
                                 <option value={3}>IMOBILIÁRIA</option>
                                 <option value={4}>ON LINE</option>
                                 <option value={5}>MÍDIA IMPRESSSA</option>
-                                <option value={6}>MÍDIA TV</option>
+                                <option value={6} selected>MÍDIA TV</option>
                                 <option value={7}>MÍDIA RÁDIO</option>
                                 <option value={8}>MÍDIA OUTDOOR</option>
                                 <option value={9}>INDICAÇÃO</option>
@@ -179,18 +209,26 @@ const PropostaDados = () => {
                     >
                         <Form.Label column sm={2} className="lab">Observações : </Form.Label>
                         <Col sm={5}>
-                            <Form.Control as="textarea" name="id_tabela" className="cont" style={{ height: '200px' }}>
+                            <Form.Control 
+                                as="textarea" 
+                                name="id_tabela" 
+                                className="cont" 
+                                style={{ height: '150px' }}
+                                value={observacoes}
+                                onChange={handleObservacoes}
+                            >
 
                             </Form.Control>
                         </Col>
 
                     </Form.Group>
+                    <div className="text-right">
+                        <Button sm={2} className="btn col-2" onClick={() => salvarDados() }>Salvar</Button>
+                    </div>
 
                 </Form>
 
-
             </Jumbotron>
-
         </>
     )
 }

@@ -1,20 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
-import BotaoLinha from './BotaoLinha'
 import MostrarEmpreendimentos from './MostrarEmpreendimentos'
 
-const PropostaEmpreendimento =
-    ({
-        setIdEmpreendimento,
-        setNomeEmpreendimento,
-        nomeEmpreendimento,
-        setMensagem
-    }) => {
+import { PropostaContext } from './Proposta'
+
+const PropostaEmpreendimento = () => {
+
+    const { setIdEmpreendimento, nomeEmpreendimento } = useContext(PropostaContext)
 
         const [exibirModalEmpreendimento, setExibirModalEmpreendimento] = useState(false)
-        // const [exibirBotoesEmpreendimento, setExibirBotoesEmpreendimento] = useState(false)
+        
 
         const [classe, setClasse] = useState('gr')
 
@@ -22,8 +20,6 @@ const PropostaEmpreendimento =
             <>
                 <Form.Group
                     as={Row}
-                    // onMouseOver={() => setExibirBotoesEmpreendimento(true)}
-                    // onMouseLeave={() => setExibirBotoesEmpreendimento(false)}
                     className="gr"
                 >
                     <Form.Label column sm={2} className="lab">Empreendimento : </Form.Label>
@@ -34,54 +30,31 @@ const PropostaEmpreendimento =
                             name="id_Empreendimento"
                             className="cont"
                             value={nomeEmpreendimento}
-                            autocomplete="off"
+                            autoComplete="off"
                             onClick={() => setExibirModalEmpreendimento(!exibirModalEmpreendimento)}
-                            readonly
+                            readOnly
                         />
                         <Form.Control.Feedback type="invalid">
                             Selecione a Imobiliária válida.
                         </Form.Control.Feedback>
                     </Col>
                     <div className="d-flex" >
-                        {
-                            nomeEmpreendimento
-                                ? <div className="d-flex">
-                                    {/* <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-primary"
-                                        icone={faFolderOpen}
-                                        onClick={() => setExibirModalEmpreendimento(!exibirModalEmpreendimento)}
-                                        dica = 'Selecionar um Empreendimento'
-                                    />
-                                    <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-success"
-                                        icone={faPlus}
-                                        onClick={() => setIdEmpreendimento(null)}
-                                        dica = 'Cadastrar um Empreendimento'
-                                    /> */}
-                                    
-                                    <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-light"
-                                        icone={faMinus}
-                                        onClick={() => setIdEmpreendimento(null)}
-                                        dica = 'Limpar campo Empreendimento'
-                                        posicao = 'right'
-                                    />
-
-
-                                    
-                                </div>
-                                : null
-                        }
-                    </div>
+                    {
+                        nomeEmpreendimento
+                            ? <div className="d-flex">
+                                <Button
+                                    disabled={false}
+                                    className="bot btn-light"
+                                    onClick={() => setIdEmpreendimento(null)}
+                                ><FontAwesomeIcon icon={faMinus} /></Button>
+                            </div>
+                            : null
+                    }
+                </div>
                 </Form.Group>
                 {
                     <MostrarEmpreendimentos
                         titulo='Empreendimentos'
-                        setIdEmpreendimento={setIdEmpreendimento}
-                        setNomeEmpreendimento={setNomeEmpreendimento}
                         setExibirModalEmpreendimento={setExibirModalEmpreendimento}
                         exibirModalEmpreendimento={exibirModalEmpreendimento} />
                 }

@@ -1,19 +1,17 @@
-import React, { useState } from 'react'
-import { Form, Row, Col } from 'react-bootstrap'
+import React, { useState, useContext } from 'react'
+import { Button, Form, Row, Col } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
-import BotaoLinha from './BotaoLinha'
 import MostrarIntervenientes from './MostrarIntervenientes'
 
-const PropostaInterveniente =
-    ({
-        setIdInterveniente,
-        setNomeInterveniente,
-        nomeInterveniente
-    }) => {
+import { PropostaContext } from './Proposta'
+
+const PropostaInterveniente = () => {
+
+    const { nomeInterveniente, setIdInterveniente } = useContext(PropostaContext)
 
     const [exibirModalInterveniente, setExibirModalInterveniente] = useState(false)
-    // const [exibirBotoesInterveniente, setExibirBotoesInterveniente] = useState(false)
 
     const [classe, setClasse] = useState('gr')
 
@@ -21,8 +19,6 @@ const PropostaInterveniente =
         <>
         <Form.Group
             as={Row}
-            // onMouseOver={() => setExibirBotoesInterveniente(true)}
-            // onMouseLeave={() => setExibirBotoesInterveniente(false)}
             className="gr"
         >
             <Form.Label column sm={2} className="lab">Interveniente : </Form.Label>
@@ -33,9 +29,9 @@ const PropostaInterveniente =
                     name="id_Interveniente"
                     className="cont"
                     value={nomeInterveniente}
-                    autocomplete="off"
+                    autoComplete="off"
                     onClick={() => setExibirModalInterveniente(!exibirModalInterveniente)}
-                    readonly
+                    readOnly
                 />
                 <Form.Control.Feedback type="invalid">
                     Selecione a Imobiliária válida.
@@ -45,38 +41,19 @@ const PropostaInterveniente =
                 {
                     nomeInterveniente
                         ? <div className="d-flex">
-                                {/* <BotaoLinha
-                                    disabled={false}
-                                    classe="bot btn-primary"
-                                    icone={faFolderOpen}
-                                    onClick={() => setExibirModalInterveniente(!exibirModalInterveniente)}
-                                    dica = 'Selecionar um Interveniente'
-                                />
-                                <BotaoLinha
-                                    disabled={false}
-                                    classe="bot btn-success"
-                                    icone={faPlus}
-                                    onClick={() => setIdInterveniente(null)}
-                                    dica = 'Cadastrar um Interveniente'
-                                /> */}
-                                <BotaoLinha
-                                    disabled={false}
-                                    classe="bot btn-light"
-                                    icone={faMinus}
-                                    onClick={() => setIdInterveniente(null)}
-                                    dica = 'Limpar campo Interveniente'
-                                    posicao = 'right'
-                                />
-                            </div>
-                        : null
+                        <Button
+                            disabled={false}
+                            className="bot btn-light"
+                            onClick={() => setIdInterveniente(null)}
+                        ><FontAwesomeIcon icon={faMinus} /></Button>
+                    </div>
+                    : null
                 }
             </div>
         </Form.Group>
         {
             <MostrarIntervenientes 
             titulo='Intervenientes'
-            setIdInterveniente={setIdInterveniente}
-            setNomeInterveniente={setNomeInterveniente}
             setExibirModalInterveniente={setExibirModalInterveniente}
             exibirModalInterveniente={exibirModalInterveniente} />
         }

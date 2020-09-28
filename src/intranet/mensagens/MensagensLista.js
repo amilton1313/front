@@ -25,6 +25,18 @@ const MensagensLista = () => {
                     </div>
                     : null
             }
+                        {/* ************************ niver Eugenio e Cida */}
+                        <MensagemNiver2
+                titulo="Aniversários"
+                data="24/09/2020"
+                cor="#28A745"
+                img="img/aniv04.png"
+                nome="EUGÊNIO"
+                local="(Engenharia)"
+                nome2="MARIA APARECIDA"
+                local2="(Copa)"
+                dataExt="24/setembro - Quinta-feira"
+            />
 
             {/* ************************  niver cota */}
             <MensagemText

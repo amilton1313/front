@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import ReactList from 'react-list';
 
-import proponentes from './lista-de-imobiliarias'
 import './propo.css'
 
-const MostrarProponentes = ({ titulo, setIdProponente, setNomeProponente,
-    setExibirModalProponente, exibirModalProponente }) => {
+import { PropostaContext } from './Proposta'
 
+const MostrarProponentes = ({ titulo, setExibirModalProponente, exibirModalProponente }) => {
+
+    const { pessoas, setIdProponente } = useContext(PropostaContext)
+    const proponentes = pessoas
+    
     const [buscar, setBuscar] = useState('')
     const [proponentesFilter, setProponentesFilter] = useState([])
 
     useEffect(() => {
         setProponentesFilter(proponentes)
-    }, [])
+    }, [proponentes])
 
     const handleSelecionar = (imob) => {
-        setIdProponente(imob.id)
-        setNomeProponente(imob.nome)
+        setIdProponente(imob)
         setExibirModalProponente(false)
     }
 
     const classe = exibirModalProponente ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
 
     const imobs = proponentesFilter ? proponentesFilter : proponentes
-    const renderItem = () => imobs.map(
-            imob => <div className="linha"  onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
-            )
 
     const handleChange = event => {
         event.preventDefault()
@@ -86,11 +85,9 @@ const MostrarProponentes = ({ titulo, setIdProponente, setNomeProponente,
                 </div>
 
             <div className="mostrar-list">
-                <ReactList
-                    itemRenderer={renderItem}
-                    length={imobs.length}
-                    type='uniform'
-                />
+                {imobs.map(
+                imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_pessoa)}>{imob.nome}</div>
+                )}
             </div>
             <div className="text-right">
             <Button sm={2} className="btn col-2" onClick={() => setExibirModalProponente(false)}>Fechar</Button>

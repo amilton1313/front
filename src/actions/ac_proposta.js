@@ -7,27 +7,25 @@ import {
 
 import clienteAxios from '../config/axios'
 
-export const ac_getPropostaById = () => {
-
+export const ac_getPropostaById = (id) => {
     return (dispatch) => {
-        clienteAxios.get('/indicesintranet')
+        clienteAxios.get(`/proposta/${id}`)
             .then(resposta => {
-                console.log('intraneet ', resposta.data)
-                dispatch(descargaIndicesExito(resposta.data))
+                dispatch(getPropostaByIdExito(resposta.data))
             })
             .catch(err => {
-                dispatch(descargaIndicesError())
+                dispatch(getPropostaByIdError())
             })
     }
 }
 
-export const descargaIndicesExito = indices => ({
-    type: INDICES_DESCARGA_INTERNET_EXITO,
-    payload: indices
+export const getPropostaByIdExito = proposta => ({
+    type: PROPOSTA_GETBYID_EXITO,
+    payload: proposta
 })
 
-export const descargaIndicesError = () => ({
-    type: INDICES_DESCARGA_INTERNET_ERRO
+export const getPropostaByIdError = () => ({
+    type: PROPOSTA_GETBYID_ERRO
 })
 
 

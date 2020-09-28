@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
-import ReactList from 'react-list'
 
-import corretores from './lista-de-imobiliarias'
+import { PropostaContext } from './Proposta'
+
 import './propo.css'
 
-const MostrarCorretores = ({ titulo, setIdCorretor, setNomeCorretor,
+const MostrarCorretores = ({ titulo,
     setExibirModalCorretor, exibirModalCorretor }) => {
+
+    const { pessoas, setIdCorretor } = useContext(PropostaContext)
+    const corretores = pessoas
 
     const [buscar, setBuscar] = useState('')
     const [corretoresFilter, setCorretoresFilter] = useState([])
 
     useEffect(() => {
         setCorretoresFilter(corretores)
-    }, [])
+    }, [corretores])
 
     const handleSelecionar = (imob) => {
-        setIdCorretor(imob.id)
-        setNomeCorretor(imob.nome)
+        setIdCorretor(imob)
         setExibirModalCorretor(false)
     }
 
     const classe = exibirModalCorretor ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
 
     const imobs = corretoresFilter ? corretoresFilter : corretores
-    const renderItem = () => imobs.map(
-            imob => <div className="linha"  onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
-            )
 
     const handleChange = event => {
         event.preventDefault()
@@ -59,8 +58,6 @@ const MostrarCorretores = ({ titulo, setIdCorretor, setNomeCorretor,
             )
     }
 
-    console.log('corretores chegou',classe, {exibirModalCorretor})
-
     return (
         <div className={classe}>
             <h4>{titulo}</h4>
@@ -88,11 +85,9 @@ const MostrarCorretores = ({ titulo, setIdCorretor, setNomeCorretor,
                 </div>
 
             <div className="mostrar-list">
-                <ReactList
-                    itemRenderer={renderItem}
-                    length={imobs.length}
-                    type='uniform'
-                />
+            {imobs.map(
+            imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_pessoa)}>{imob.nome}</div>
+            )}
             </div>
             <div className="text-right">
             <Button sm={2} className="btn col-2" onClick={() => setExibirModalCorretor(false)}>Fechar</Button>

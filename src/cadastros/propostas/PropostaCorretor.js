@@ -1,26 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Row, Col } from 'react-bootstrap'
 import { faMinus, faPlus, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 import BotaoLinha from './BotaoLinha'
 import MostrarCorretores from './MostrarCorretores'
 
-const PropostaCorretor =
-    ({
-        setIdCorretor,
-        setNomeCorretor,
-        nomeCorretor
-    }) => {
+import { PropostaContext } from './Proposta'
+
+const PropostaCorretor = () => {
 
     const [exibirModalCorretor, setExibirModalCorretor] = useState(false)
-    // const [exibirBotoesCorretor, setExibirBotoesCorretor] = useState(false)
+
+    const { setIdCorretor, nomeCorretor } = useContext(PropostaContext)
 
     return (
         <>
         <Form.Group
             as={Row}
-            // onMouseOver={() => setExibirBotoesCorretor(true)}
-            // onMouseLeave={() => setExibirBotoesCorretor(false)}
             className="gr"
         >
             <Form.Label column sm={2} className="lab">Corretor : </Form.Label>
@@ -31,9 +27,9 @@ const PropostaCorretor =
                     name="id_Corretor"
                     className="cont"
                     value={nomeCorretor}
-                    autocomplete="off"
+                    autoComplete="off"
                     onClick={() => setExibirModalCorretor(!exibirModalCorretor)}
-                    readonly
+                    readOnly
                 />
                 <Form.Control.Feedback type="invalid">
                     Selecione a Imobiliária válida.
@@ -43,20 +39,6 @@ const PropostaCorretor =
                 {
                     nomeCorretor
                         ? <div className="d-flex">
-                                {/* <BotaoLinha
-                                    disabled={false}
-                                    classe="bot btn-primary"
-                                    icone={faFolderOpen}
-                                    onClick={() => setExibirModalCorretor(!exibirModalCorretor)}
-                                    dica = 'Selecionar um Corretor'
-                                />
-                                <BotaoLinha
-                                    disabled={false}
-                                    classe="bot btn-success"
-                                    icone={faPlus}
-                                    onClick={() => setIdCorretor(null)}
-                                    dica = 'Cadastrar um Corretor'
-                                /> */}
                                 <BotaoLinha
                                     disabled={false}
                                     classe="bot btn-light"
@@ -73,8 +55,6 @@ const PropostaCorretor =
         {
             <MostrarCorretores 
                 titulo='Corretores'
-                setIdCorretor={setIdCorretor}
-                setNomeCorretor={setNomeCorretor}
                 setExibirModalCorretor={setExibirModalCorretor}
                 exibirModalCorretor={exibirModalCorretor} />
         }

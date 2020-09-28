@@ -11,11 +11,10 @@ const Mensagem001 = ({titulo, cor, data, img, nome, local, nome2, local2, dataEx
             <div className="intra-body-aniv">
                 <img src={img} className="intra-img-small intra-body-aniv__img" alt="foto" />
                 <div>
-                    <p className="intra-body-aniv__text">
+                    <p className="intra-body-aniv__text">   
                         <span className="text-primary intra-body-aniv__nome" >{nome}</span>
                         <span className="intra-body-aniv__local"> {local}</span>
                         <br />
-
                         <span className="text-primary intra-body-aniv__nome" >{nome2}</span>
                         <span className="intra-body-aniv__local"> {local2}</span>
                         <br />

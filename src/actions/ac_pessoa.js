@@ -13,7 +13,13 @@ import {
     PESSOA_DADOS_CNPJ_ERRO,
 
     PESSOA_COMPLETA_EXITO,
-    PESSOA_COMPLETA_ERRO
+    PESSOA_COMPLETA_ERRO,
+
+    PESSOA_IDNOME_EXITO,
+    PESSOA_IDNOME_ERRO,
+
+    IMOBILIARIAS_EXITO,
+    IMOBILIARIAS_ERRO
 
 } from '../types/ty_pessoas_dados'
 
@@ -123,30 +129,6 @@ export const ac_obterPessoasDados = token => {
     }
 }
 
-export function ac_obterPessoaCompleta (token, id)  {
-    return (dispatch) => {
-        clienteAxios.get(`/pessoacompleta/${id}`, {
-            headers: { Authorization: token }
-        })
-            .then(resposta => {
-                dispatch(obterPessoaCompleta_exito(resposta.data[0]))
-
-            })
-            .catch(err => {
-                console.log(err)
-                dispatch(obterPessoaCompleta_erro())
-            })
-    }
-}
-
-export const obterPessoaCompleta_exito = pessoa => ({
-    type: PESSOA_COMPLETA_EXITO,
-    payload: pessoa
-})
-
-export const obterPessoaCompleta_erro = () => ({
-    type: PESSOA_COMPLETA_ERRO
-})
 
 export const ac_obterProductosComeco = error => ({
     type: PESSOA_DADOS_DESCARGA_INICIO,
@@ -167,22 +149,97 @@ export const ac_descargaPessoasFiltrado = pessoas => ({
     payload: pessoas
 })
 
-    
 
-    // export const ac_incluirPessoasDados = pessoa => dispatch => {
+
+// export const ac_incluirPessoasDados = pessoa => dispatch => {
     //     clienteAxios.post('/pessoa', pessoa)
     //         .then(resposta => {
-    //             dispatch({
-    //                 type: 'PESSOA_DADOS_INCLUIR',
-    //                 payload: resposta.data
-    //             })
-    //         }
-    //         )
-    // }
+        //             dispatch({
+            //                 type: 'PESSOA_DADOS_INCLUIR',
+            //                 payload: resposta.data
+            //             })
+            //         }
+            //         )
+            // }
+            
+            export const incluirPessoasDados = pessoas => ({
+                type: PESSOA_DADOS_INCLUIR,
+                payload: pessoas
+            })
+            
+            
+            
+export function ac_getPessoaCompleta (token, id)  {
+    return (dispatch) => {
+        clienteAxios.get(`/pessoacompleta/${id}`, {
+            headers: { Authorization: token }
+        })
+            .then(resposta => {
+                dispatch(getPessoaCompleta_exito(resposta.data[0]))
 
-export const incluirPessoasDados = pessoas => ({
-    type: PESSOA_DADOS_INCLUIR,
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(getPessoaCompleta_erro())
+            })
+    }
+}
+
+const getPessoaCompleta_exito = pessoa => ({
+    type: PESSOA_COMPLETA_EXITO,
+    payload: pessoa
+})
+
+const getPessoaCompleta_erro = () => ({
+    type: PESSOA_COMPLETA_ERRO
+})
+
+export function ac_getPessoaIdNome (token, id)  {
+    return (dispatch) => {
+        clienteAxios.get(`/pessoas`, {
+            headers: { Authorization: token }
+        })
+            .then(resposta => {
+                dispatch(getPessoaIdNome_exito(resposta.data))
+
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(getPessoaIdNome_erro())
+            })
+    }
+}
+
+const getPessoaIdNome_exito = pessoas => ({
+    type: PESSOA_IDNOME_EXITO,
     payload: pessoas
 })
 
+const getPessoaIdNome_erro = () => ({
+    type: PESSOA_IDNOME_ERRO
+})
 
+export function ac_getImobiliarias (token, id)  {
+    return (dispatch) => {
+        clienteAxios.get(`/imobiliarias`, {
+            headers: { Authorization: token }
+        })
+            .then(resposta => {
+                dispatch(getImobiliarias_exito(resposta.data))
+
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(getImobiliarias_erro())
+            })
+    }
+}
+
+const getImobiliarias_exito = pessoas => ({
+    type: IMOBILIARIAS_EXITO,
+    payload: pessoas
+})
+
+const getImobiliarias_erro = () => ({
+    type: IMOBILIARIAS_ERRO
+})

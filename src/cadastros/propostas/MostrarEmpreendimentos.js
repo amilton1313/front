@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
-import ReactList from 'react-list'
 
-import empreendimentos from './lista-de-empreendimentos'
+import { PropostaContext } from './Proposta'
+
 import './propo.css'
 
-const MostrarEmpreendimentos = ({ titulo, setIdEmpreendimento, setNomeEmpreendimento,
-    setExibirModalEmpreendimento, exibirModalEmpreendimento }) => {
+const MostrarEmpreendimentos = ({ titulo, setExibirModalEmpreendimento, exibirModalEmpreendimento }) => {
 
+    const { empreendimentos, setIdEmpreendimento } = useContext(PropostaContext)
+    // const imobiliarias = pessoas
+    
     const [buscar, setBuscar] = useState('')
     const [empreendimentosFilter, setEmpreendimentosFilter] = useState([])
 
@@ -16,17 +18,13 @@ const MostrarEmpreendimentos = ({ titulo, setIdEmpreendimento, setNomeEmpreendim
     }, [])
 
     const handleSelecionar = (imob) => {
-        setIdEmpreendimento(imob.id)
-        setNomeEmpreendimento(imob.nome)
+        setIdEmpreendimento(imob)
         setExibirModalEmpreendimento(false)
     }
 
     const classe = exibirModalEmpreendimento ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
 
-    const imobs = empreendimentosFilter ? empreendimentosFilter : empreendimentos
-    const renderItem = () => imobs.map(
-            imob => <div className="linha"  onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
-            )
+    const imobs = empreendimentosFilter.length > 0 ? empreendimentosFilter : empreendimentos
 
     const handleChange = event => {
         event.preventDefault()
@@ -59,8 +57,6 @@ const MostrarEmpreendimentos = ({ titulo, setIdEmpreendimento, setNomeEmpreendim
             )
     }
 
-    console.log('Empreendimentos chegou',classe, {exibirModalEmpreendimento})
-
     return (
         <div className={classe}>
             <h4>{titulo}</h4>
@@ -88,11 +84,9 @@ const MostrarEmpreendimentos = ({ titulo, setIdEmpreendimento, setNomeEmpreendim
                 </div>
 
             <div className="mostrar-list">
-                <ReactList
-                    itemRenderer={renderItem}
-                    length={imobs.length}
-                    type='uniform'
-                />
+                {imobs.map(
+                imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_empreendimento)}>{imob.nome}</div>
+                )}
             </div>
             <div className="text-right">
             <Button sm={2} className="btn col-2" onClick={() => setExibirModalEmpreendimento(false)}>Fechar</Button>

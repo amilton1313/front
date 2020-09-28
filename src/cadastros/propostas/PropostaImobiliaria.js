@@ -1,92 +1,64 @@
-import React, { useState } from 'react'
-import { Form, Row, Col } from 'react-bootstrap'
-import { faMinus, faPlus, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useContext } from 'react'
+import { Button, Form, Row, Col } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
 
-import BotaoLinha from './BotaoLinha'
 import MostrarImobiliarias from './MostrarImobiliarias'
 
-const PropostaImobiliaria =
-    ({
-        setIdImobiliaria,
-        setNomeImobiliaria,
-        nomeImobiliaria,
-        setMensagem
-    }) => {
+import { PropostaContext } from './Proposta'
 
-        const [exibirModalImobiliaria, setExibirModalImobiliaria] = useState(false)
-        // const [exibirBotoesImobiliaria, setExibirBotoesImobiliaria] = useState(false)
+const PropostaImobiliaria = () => {
 
-        const [classe, setClasse] = useState('gr')
+    const { setIdImobiliaria, nomeImobiliaria } = useContext(PropostaContext)
 
-        return (
-            <>
-                <Form.Group
-                    as={Row}
-                    // onMouseOver={() => setExibirBotoesImobiliaria(true)}
-                    // onMouseLeave={() => setExibirBotoesImobiliaria(false)}
-                    className="gr"
-                >
-                    <Form.Label column sm={2} className="lab">Imobiliária : </Form.Label>
-                    <Col sm={5}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Clique para selecionar uma Imobiliária"
-                            name="id_Imobiliaria"
-                            className="cont"
-                            value={nomeImobiliaria}
-                            readonly
-                            onClick={() => setExibirModalImobiliaria(!exibirModalImobiliaria)}
-                            autocomplete="off"
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Selecione a Imobiliária válida.
+    const [exibirModalImobiliaria, setExibirModalImobiliaria] = useState(false)
+
+    const [classe, setClasse] = useState('gr')
+
+    return (
+        <>
+            <Form.Group
+                as={Row}
+                className="gr"
+            >
+                <Form.Label column sm={2} className="lab">Imobiliária : </Form.Label>
+                <Col sm={5}>
+                    <Form.Control
+                        type="text"
+                        placeholder="Clique para selecionar uma Imobiliária"
+                        name="id_Imobiliaria"
+                        className="cont"
+                        value={nomeImobiliaria}
+                        readOnly
+                        onClick={() => setExibirModalImobiliaria(!exibirModalImobiliaria)}
+                        autoComplete="off"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Selecione a Imobiliária válida.
                         </Form.Control.Feedback>
-                    </Col>
-                    <div className="d-flex" >
-                        {
-                            nomeImobiliaria
-                                ? <div className="d-flex">
-                                    {/* <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-primary"
-                                        icone={faFolderOpen}
-                                        onClick={() => setExibirModalImobiliaria(!exibirModalImobiliaria)}
-                                        dica = 'Selecionar uma Imobiliária'
-                                    />
-                                    <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-success"
-                                        icone={faPlus}
-                                        onClick={() => setIdImobiliaria(null)}
-                                        dica = 'Cadastrar uma Imobiliária'
-                                    /> */}
-                                    
-                                    <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-light"
-                                        icone={faMinus}
-                                        onClick={() => setIdImobiliaria(null)}
-                                        dica = 'Limpar campo Imobiliária'
-                                        posicao = 'right'
-                                    />
-
-
-                                    
-                                </div>
-                                : null
-                        }
-                    </div>
-                </Form.Group>
-                {
-                    <MostrarImobiliarias
-                        titulo='Imobiliárias'
-                        setIdImobiliaria={setIdImobiliaria}
-                        setNomeImobiliaria={setNomeImobiliaria}
-                        setExibirModalImobiliaria={setExibirModalImobiliaria}
-                        exibirModalImobiliaria={exibirModalImobiliaria} />
-                }
-            </>
-        );
-    }
+                </Col>
+                <div className="d-flex" >
+                    {
+                        nomeImobiliaria
+                            ? <div className="d-flex">
+                                <Button
+                                    disabled={false}
+                                    className="bot btn-light"
+                                    onClick={() => setIdImobiliaria(null)}
+                                ><FontAwesomeIcon icon={faMinus} /></Button>
+                            </div>
+                            : null
+                    }
+                </div>
+            </Form.Group>
+            {
+                <MostrarImobiliarias
+                    titulo='Imobiliárias'
+                    setExibirModalImobiliaria={setExibirModalImobiliaria}
+                    exibirModalImobiliaria={exibirModalImobiliaria} />
+            }
+        </>
+    );
+}
 
 export default PropostaImobiliaria;

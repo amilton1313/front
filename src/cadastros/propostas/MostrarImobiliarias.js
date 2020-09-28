@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
-import ReactList from 'react-list';
 
-import imobiliarias from './lista-de-imobiliarias'
+import { PropostaContext } from './Proposta'
+
 import './propo.css'
 
-const MostrarImobiliarias = ({ titulo, setIdImobiliaria, setNomeImobiliaria,
-    setExibirModalImobiliaria, exibirModalImobiliaria }) => {
+const MostrarImobiliarias = ({ titulo, exibirModalImobiliaria, setExibirModalImobiliaria }) => {
+
+    const { imobiliarias, setIdImobiliaria, nomeImobiliaria } = useContext(PropostaContext)
 
     const [buscar, setBuscar] = useState('')
     const [imobiliariasFilter, setImobiliariasFilter] = useState([])
 
     useEffect(() => {
         setImobiliariasFilter(imobiliarias)
-    }, [])
+    }, [imobiliarias])
 
     const handleSelecionar = (imob) => {
-        setIdImobiliaria(imob.id)
-        setNomeImobiliaria(imob.nome)
+        setIdImobiliaria(imob)
         setExibirModalImobiliaria(false)
     }
 
     const classe = exibirModalImobiliaria ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
 
     const imobs = imobiliariasFilter ? imobiliariasFilter : imobiliarias
-    const renderItem = () => imobs.map(
-            imob => <div className="linha"  onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
-            )
 
     const handleChange = event => {
         event.preventDefault()
@@ -86,11 +83,10 @@ const MostrarImobiliarias = ({ titulo, setIdImobiliaria, setNomeImobiliaria,
                 </div>
 
             <div className="mostrar-list">
-                <ReactList
-                    itemRenderer={renderItem}
-                    length={imobs.length}
-                    type='uniform'
-                />
+                {imobs.map(
+                imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_pessoa)}>{imob.nome}</div>
+                )}
+
             </div>
             <div className="text-right">
             <Button sm={2} className="btn col-2" onClick={() => setExibirModalImobiliaria(false)}>Fechar</Button>

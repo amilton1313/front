@@ -4,7 +4,7 @@ import './pessoa.css'
 import pessoaServicos from './pessoaServicos'
 
 
-import { ac_obterPessoaCompleta } from '../../actions/ac_pessoa'
+import { ac_getPessoaCompleta } from '../../actions/ac_pessoa'
 
 import Spinner from '../../spinner/Spinner'
 
@@ -22,7 +22,7 @@ const PessoaMostrar = ({ history }) => {
     const token = useSelector(state => state.auth.token)
 
     useEffect(() => {
-        dispatch(ac_obterPessoaCompleta(token, id))
+        dispatch(ac_getPessoaCompleta(token, id))
     }, [])
 
 
