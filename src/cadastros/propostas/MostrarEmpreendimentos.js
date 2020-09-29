@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
+import clienteAxios from '../../config/axios'
+
 import { PropostaContext } from './Proposta'
 
 import './propo.css'
 
 const MostrarEmpreendimentos = ({ titulo, setExibirModalEmpreendimento, exibirModalEmpreendimento }) => {
 
-    const { empreendimentos, setIdEmpreendimento } = useContext(PropostaContext)
-    // const imobiliarias = pessoas
+    const { setIdEmpreendimento, setNomeEmpreendimento } = useContext(PropostaContext)
     
     const [buscar, setBuscar] = useState('')
+    const [empreendimentos, setEmpreendimentos] = useState([])
     const [empreendimentosFilter, setEmpreendimentosFilter] = useState([])
 
     useEffect(() => {
@@ -18,8 +20,27 @@ const MostrarEmpreendimentos = ({ titulo, setExibirModalEmpreendimento, exibirMo
     }, [])
 
     const handleSelecionar = (imob) => {
-        setIdEmpreendimento(imob)
+        setIdEmpreendimento(imob.id_empreendimento)
+        setNomeEmpreendimento(imob.nome)
         setExibirModalEmpreendimento(false)
+    }
+
+    useEffect(() => {
+        if (exibirModalEmpreendimento) {
+            getEmpreendimentos()
+        } else {
+            setEmpreendimentos([])
+        }
+    }, [exibirModalEmpreendimento])
+
+    const getEmpreendimentos = () => {
+        clienteAxios.get(`/empreendimentos`)
+            .then(resposta => {
+                setEmpreendimentos(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const classe = exibirModalEmpreendimento ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
@@ -85,7 +106,7 @@ const MostrarEmpreendimentos = ({ titulo, setExibirModalEmpreendimento, exibirMo
 
             <div className="mostrar-list">
                 {imobs.map(
-                imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_empreendimento)}>{imob.nome}</div>
+                imob => <div className="linha"  onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
                 )}
             </div>
             <div className="text-right">

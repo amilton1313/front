@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
+import clienteAxios from '../../config/axios'
+
 import { PropostaContext } from './Proposta'
 
 import './propo.css'
 
 const MostrarImobiliarias = ({ titulo, exibirModalImobiliaria, setExibirModalImobiliaria }) => {
 
-    const { imobiliarias, setIdImobiliaria, nomeImobiliaria } = useContext(PropostaContext)
+    const { setIdImobiliaria, setNomeImobiliaria, nomeImobiliaria } = useContext(PropostaContext)
 
     const [buscar, setBuscar] = useState('')
+    const [imobiliarias, setImobiliarias] = useState([])
     const [imobiliariasFilter, setImobiliariasFilter] = useState([])
 
     useEffect(() => {
@@ -17,8 +20,27 @@ const MostrarImobiliarias = ({ titulo, exibirModalImobiliaria, setExibirModalImo
     }, [imobiliarias])
 
     const handleSelecionar = (imob) => {
-        setIdImobiliaria(imob)
+        setIdImobiliaria(imob.id_pessoa)
+        setNomeImobiliaria(imob.nome)
         setExibirModalImobiliaria(false)
+    }
+
+    useEffect(() => {
+        if (exibirModalImobiliaria) {
+            getPessoas()
+        } else {
+            setImobiliarias([])
+        }
+    }, [exibirModalImobiliaria])
+
+    const getPessoas = () => {
+        clienteAxios.get(`/pessoas`)
+            .then(resposta => {
+                setImobiliarias(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const classe = exibirModalImobiliaria ? "left_sidebar left_sidebar-show" : "left_sidebar left_sidebar-hide"
@@ -61,35 +83,34 @@ const MostrarImobiliarias = ({ titulo, exibirModalImobiliaria, setExibirModalImo
             <h4>{titulo}</h4>
             <div className="mostrar-div1">
 
-            
-            <Form.Group
-            as={Row}
-            className="gr"
-            >
-                <Form.Label column sm={1} className="lab">Procurar : </Form.Label>
-                <Col sm={8}>
-                    <Form.Control
-                        type="text"
-                        placeholder="Digite o nome a ser procurado"
-                        name="buscar"
-                        className="cont"
-                        value={buscar}
-                        onChange={e => {
-                            onBuscar(e.target.value)
-                        }}
-                    />
-                </Col>
+                <Form.Group
+                    as={Row}
+                    className="gr"
+                >
+                    <Form.Label column sm={1} className="lab">Procurar : </Form.Label>
+                    <Col sm={8}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Digite o nome a ser procurado"
+                            name="buscar"
+                            className="cont"
+                            value={buscar}
+                            onChange={e => {
+                                onBuscar(e.target.value)
+                            }}
+                        />
+                    </Col>
                 </Form.Group>
-                </div>
+            </div>
 
             <div className="mostrar-list">
                 {imobs.map(
-                imob => <div className="linha"  onClick={() => handleSelecionar(imob.id_pessoa)}>{imob.nome}</div>
+                    imob => <div className="linha" onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
                 )}
 
             </div>
             <div className="text-right">
-            <Button sm={2} className="btn col-2" onClick={() => setExibirModalImobiliaria(false)}>Fechar</Button>
+                <Button sm={2} className="btn col-2" onClick={() => setExibirModalImobiliaria(false)}>Fechar</Button>
 
             </div>
 

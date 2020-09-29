@@ -17,8 +17,7 @@ import { PropostaContext } from './Proposta'
 
 const PropostaDados = () => {
 
-    const { proposta, pessoas, imobiliarias, getPessoas,
-        id_proposta, setId_proposta, data, setData,
+    const { id_proposta, setId_proposta, data, setData,
         idImobiliaria, setIdImobiliaria, nomeImobiliaria, setNomeImobiliaria,
         idCorretor, setIdCorretor, nomeCorretor, setNomeCorretor,
         idProponente, setIdProponente, nomeProponente, setNomeProponente,
@@ -34,37 +33,6 @@ const PropostaDados = () => {
         { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
     ]
 
-    useEffect(() => {
-        const id = idImobiliaria
-        const no = getNome(id)
-        setNomeImobiliaria(no)    
-    }, [idImobiliaria])
-
-    useEffect(() => {
-        const id = idCorretor
-        const no = getNome(id)
-        setNomeCorretor(no)
-    }, [idCorretor])
-
-    useEffect(() => {
-        const id = idProponente
-        const no = getNome(id)
-        setNomeProponente(no)
-    }, [idProponente])
-
-    useEffect(() => {
-        const id = idInterveniente
-        const no = getNome(id)
-        setNomeInterveniente(no)
-    }, [idInterveniente])
-
-    const getNome = (id) => {
-        if (id === null) return ''
-        const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
-        const nom = pessoa[0] ? pessoa[0] : {}
-        return nom.nome
-    }
-
     const handleLocalCaptacao = event => {
         setIdLocalCaptacao(event.target.value)
       }
@@ -72,8 +40,6 @@ const PropostaDados = () => {
     const handleObservacoes = event => {
         setObservacoes(event.target.value)
       }
-
-
 
     const salvarDados = () => {
         const prop = {
@@ -95,27 +61,6 @@ const PropostaDados = () => {
                 console.log(err)
             })
     }
-
-    // const getNome = (id,pessoas) => {
-    //     console.log('pessoas >>>>>>>>', pessoas)
-    //     return new Promise((resolve) => {
-    //         const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
-    //         const nom = pessoa[0] ? pessoa[0] : {}
-    //         console.log('no imocbiliaria >>xx>>', id, ' - ', pessoa)
-    //         resolve(nom.nome)
-    //     })
-    // }
-
-    // console.log('pessoas >>>', pessoas)
-
-    
-
-    //     const getNome = (id) => {
-    //     if (id === null) return ''
-    //     const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
-    //     const nom = pessoa[0] ? pessoa[0] : {}
-    //     return nom.nome
-    // }
 
     return (
         <>
@@ -178,7 +123,7 @@ const PropostaDados = () => {
                         className="gr"
                     >
                         <Form.Label column sm={2} className="lab">Local da Captação : </Form.Label>
-                        <Col sm={5}>
+                        <Col sm={7}>
                             <Form.Control as="select" 
                                 name="id_tabela" 
                                 className="cont"
@@ -208,7 +153,7 @@ const PropostaDados = () => {
                         className="gr"
                     >
                         <Form.Label column sm={2} className="lab">Observações : </Form.Label>
-                        <Col sm={5}>
+                        <Col sm={7}>
                             <Form.Control 
                                 as="textarea" 
                                 name="id_tabela" 
@@ -222,9 +167,11 @@ const PropostaDados = () => {
                         </Col>
 
                     </Form.Group>
-                    <div className="text-right">
+                        <Col sm={11} className="text-center">
+
                         <Button sm={2} className="btn col-2" onClick={() => salvarDados() }>Salvar</Button>
-                    </div>
+                        </Col>
+
 
                 </Form>
 

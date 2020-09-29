@@ -7,39 +7,42 @@ import clienteAxios from '../../config/axios'
 import BotaoLinha from './BotaoLinha'
 
 import PropostaEmpreendimento from './PropostaEmpreendimento'
-import tabelasVendas from './lista-de-tabelas-vendas'
+// import tabelasVendas from './lista-de-tabelas-vendas'
 import './propo.css'
 
 import { PropostaContext } from './Proposta'
 
 const PropostaUnidades = () => {
 
-    const { empreendimentos, idEmpreendimento, setIdEmpreendimento,
-        nomeEmpreendimento, setNomeEmpreendimento
+    const { idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
+        idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
     } = useContext(PropostaContext)
 
-    useEffect(() => {
-        const id = idEmpreendimento
-        const no = getNome(id)
-        setNomeEmpreendimento(no)
-    }, [idEmpreendimento])
-
-    const getNome = (id) => {
-        if (id === null) return ''
-        const empreendimento = empreendimentos.filter(pes => pes.id_empreendimento === id)
-        const nom = empreendimento[0] ? empreendimento[0] : {}
-        return nom.nome
-    }
 
     const unidades = [
         { id_unidade: 34, blocox: 'Aurora', numero: '404', garagensx: '25 e 36', depositosx: '65 e 21' },
         { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
     ]
 
-    useEffect(() => {
-        if (!idEmpreendimento) { setNomeEmpreendimento('') }
+    const salvarDados = () => {
+        const prop = {
+            id_empreendimento: idEmpreendimento,
+            id_tabela_vendas: idTabelaVendas
+        }
+        console.log('salvando dados...', prop)
 
-    }, [idEmpreendimento])
+        clienteAxios.put(`/proposta/${1545}`, prop)
+            .then(resposta => {
+                // setEmpreendimentos(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const handleTabelaVendas = event => {
+        setIdTabelaVendas(event.target.value)
+    }
 
     return (
         <>
@@ -58,8 +61,14 @@ const PropostaUnidades = () => {
                         className="gr"
                     >
                         <Form.Label column sm={2} className="lab">Tabela de Vendas : </Form.Label>
-                        <Col sm={5}>
-                            <Form.Control as="select" name="id_tabela" className="cont">
+                        <Col sm={7}>
+                            <Form.Control
+                                as="select"
+                                name="id_tabela"
+                                className="cont"
+                                value={idTabelaVendas}
+                                onChange={handleTabelaVendas}
+                            >
                                 {
                                     tabelasVendas.map(tab => <option value={tab.id_tabela_vendas}>{tab.descricao}</option>)
                                 }
@@ -69,49 +78,54 @@ const PropostaUnidades = () => {
                     </Form.Group>
 
                 </Form>
-
-                <div style={{ marginLeft: '18%' }}>
-                    <div className="d-flex ">
-                        <div className="div-unidades-1">Bloco</div>
-                        <div className="div-unidades-2">Unidade</div>
-                        <div className="div-unidades-2">Garagens</div>
-                        <div className="div-unidades-2">Depósitos</div>
-                        <div style={{ marginLeft: '5px' }}>
-                            <BotaoLinha
-                                disabled={false}
-                                classe="bot btn-sm btn-primary"
-                                icone={faPlus}
-                                onClick={() => setIdEmpreendimento(null)}
-                                dica='Incluir uma unidade'
-                                posicao='right'
-                                style={{ lineHeight: '2rem' }}
-                            />
-
-                        </div>
-                    </div>
+                <div className="d-flex">
+                <Col sm={2}></Col>
+                <Col sm={9}>
+                <Table borderless size="sm">
+                    <thead>
+                        <tr>
+                            <th style={{width: "40%", backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Bloco</th>
+                            <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Unidades</th>
+                            <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Garagens</th>
+                            <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Depósitos</th>
+                            <th><span style={{backgroundColor: '#0069D9', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}><FontAwesomeIcon icon={faPlus} /></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     {
                         unidades.map(und => (
-
-                            <div className="d-flex bg-white">
-                                <div className="div-unidades-3">{und.blocox}</div>
-                                <div className="div-unidades-4">{und.numero}</div>
-                                <div className="div-unidades-4">{und.garagensx}</div>
-                                <div className="div-unidades-4">{und.depositosx}</div>
-                                <div style={{ marginLeft: '5px' }}>
-                                    <BotaoLinha
+                            <tr>
+                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.blocox}</td>
+                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.numero}</td>
+                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.garagensx}</td>
+                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.depositosx}</td>
+                                <td >
+                                    {/* <BotaoLinha
                                         disabled={false}
                                         classe="bot btn-sm btn-light"
                                         icone={faMinus}
                                         onClick={() => setIdEmpreendimento(null)}
                                         dica='Excluir esta unidade'
                                         posicao='right'
-                                    />
+                                    /> */}
+                                    <span style={{backgroundColor: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}><FontAwesomeIcon icon={faMinus} /></span>
 
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
                         ))
                     }
+
+                    </tbody>
+
+                </Table>
+                </Col>
                 </div>
+
+                
+                <Col sm={12} className="text-center">
+
+                    <Button sm={2} className="btn col-2" onClick={() => salvarDados()}>Salvar</Button>
+                </Col>
 
             </Jumbotron>
 

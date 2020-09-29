@@ -9,11 +9,16 @@ import { PropostaContext } from './Proposta'
 
 const PropostaProponente = () => {
 
-    const { nomeProponente, setIdProponente } = useContext(PropostaContext)
+    const { setNomeProponente, nomeProponente, setIdProponente } = useContext(PropostaContext)
 
     const [exibirModalProponente, setExibirModalProponente] = useState(false)
 
     const [classe, setClasse] = useState('gr')
+
+    const onLimpar = () => {
+        setIdProponente(null)
+        setNomeProponente('')
+    }
 
     return (
         <>
@@ -22,7 +27,7 @@ const PropostaProponente = () => {
             className="gr"
         >
             <Form.Label column sm={2} className="lab">Proponente : </Form.Label>
-            <Col sm={5}>
+            <Col sm={7}>
                 <Form.Control
                     type="text"
                     placeholder="Clique para selecionar um Proponente."
@@ -39,12 +44,12 @@ const PropostaProponente = () => {
             </Col>
             <div className="d-flex" >
                     {
-                        nomeProponente
+                        (nomeProponente !== '')
                             ? <div className="d-flex">
                                 <Button
                                     disabled={false}
                                     className="bot btn-light"
-                                    onClick={() => setIdProponente(null)}
+                                    onClick={() => onLimpar()}
                                 ><FontAwesomeIcon icon={faMinus} /></Button>
                             </div>
                             : null

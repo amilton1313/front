@@ -11,7 +11,12 @@ const PropostaCorretor = () => {
 
     const [exibirModalCorretor, setExibirModalCorretor] = useState(false)
 
-    const { setIdCorretor, nomeCorretor } = useContext(PropostaContext)
+    const { setIdCorretor, setNomeCorretor, nomeCorretor } = useContext(PropostaContext)
+
+    const onLimpar = () => {
+        setIdCorretor(null)
+        setNomeCorretor('')
+    }
 
     return (
         <>
@@ -20,7 +25,7 @@ const PropostaCorretor = () => {
             className="gr"
         >
             <Form.Label column sm={2} className="lab">Corretor : </Form.Label>
-            <Col sm={5}>
+            <Col sm={7}>
                 <Form.Control
                     type="text"
                     placeholder="Clique para selecionar um Corretor."
@@ -37,13 +42,13 @@ const PropostaCorretor = () => {
             </Col>
             <div className="d-flex" >
                 {
-                    nomeCorretor
+                    (nomeCorretor !== '')
                         ? <div className="d-flex">
                                 <BotaoLinha
                                     disabled={false}
                                     classe="bot btn-light"
                                     icone={faMinus}
-                                    onClick={() => setIdCorretor(null)}
+                                    onClick={() => onLimpar()}
                                     dica = 'Limpar campo Corretor'
                                     posicao = 'right'
                                 />

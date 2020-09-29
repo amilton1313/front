@@ -11,7 +11,7 @@ export const PropostaContext = createContext()
 const Proposta = () => {
 
     const [pessoas, setPessoas] = useState([])
-    const [imobiliarias, setImobiliarias] = useState([])
+    // const [imobiliarias, setImobiliarias] = useState([])
 
     const [proposta, SetProposta] = useState({})
     const [id_proposta, setId_proposta] = useState(null)
@@ -30,36 +30,24 @@ const Proposta = () => {
 
     const [idEmpreendimento, setIdEmpreendimento] = useState(null)
     const [nomeEmpreendimento, setNomeEmpreendimento] = useState('')
-    const [empreendimentos, setEmpreendimentos] = useState([])
+    // const [empreendimentos, setEmpreendimentos] = useState([])
+    const [idTabelaVendas, setIdTabelaVendas] = useState(null)
+    const [tabelasVendas, setTabelasVendas] = useState([])
 
     const getProposta = (id) => {
         clienteAxios.get(`/proposta/${id}`)
             .then(resposta => {
-                SetProposta(resposta.data)
+                SetProposta(resposta.data[0])
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
-
-
-    const getPessoas = () => {
-        // setPessoas([])
-        clienteAxios.get(`/pessoas`)
+    const getTabelasVendas = (idEmpreendimento) => {
+        clienteAxios.get(`/tabelasvendas/${idEmpreendimento}`)
             .then(resposta => {
-                setPessoas(resposta.data)
-                setImobiliarias(resposta.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    const getEmpreendimentos = () => {
-        clienteAxios.get(`/empreendimentos`)
-            .then(resposta => {
-                setEmpreendimentos(resposta.data)
+                setTabelasVendas(resposta.data)
             })
             .catch(err => {
                 console.log(err)
@@ -68,44 +56,37 @@ const Proposta = () => {
 
     useEffect(() => {
         getProposta(1545)
-        getPessoas()
-        getEmpreendimentos()
     }, [])
 
-    
-    // useEffect(() => {
-        //     const id=idEmpreendimento
-        //     const no=getNome(id)
-        //     setNomeEmpreendimento(no)
-        // }, [idEmpreendimento])
-        
-        useEffect(() => {
-            setId_proposta(proposta.id)
-            setData(proposta.data)
-            setIdImobiliaria(proposta.id_imobiliaria)
-            setIdCorretor(proposta.id_corretor)
-            setIdProponente(proposta.id_proponente)
-            setIdInterveniente(proposta.id_interveniente)
-            setIdLocalCaptacao(proposta.id_localcaptacao)
-            setObservacoes(proposta.observacoes)
-        }, [pessoas])
-        
-    const getNome = (id) => {
-        if (id === null) return ''
-        const pessoa = pessoas.filter(pes => pes.id_pessoa === id)
-        const nom = pessoa[0] ? pessoa[0] : {}
-        return nom.nome
-    }
+    useEffect(() => {
+        getTabelasVendas(idEmpreendimento)
+    }, [idEmpreendimento])
 
+    useEffect(() => {
+        setId_proposta(proposta.id_proposta)
+        setData(proposta.data)
+        setIdImobiliaria(proposta.id_imobiliaria)
+        setNomeImobiliaria(proposta.nomeimobiliaria)
+        setIdCorretor(proposta.id_corretor)
+        setNomeCorretor(proposta.nomecorretor)
+        setIdProponente(proposta.id_proponente)
+        setNomeProponente(proposta.nomeproponente)
+        setIdInterveniente(proposta.id_interveniente)
+        setNomeInterveniente(proposta.nomeinterveniente)
+        setIdLocalCaptacao(proposta.id_localcaptacao)
+        setObservacoes(proposta.observacoes)
+
+        setIdEmpreendimento(proposta.id_empreendimento)
+        setNomeEmpreendimento(proposta.nomeempreendimento)
+        setIdTabelaVendas(proposta.id_tabela_vendas)
+    }, [proposta])
+        
     return (
         <>
             <PropostaContext.Provider value={{
                 proposta,
                 SetProposta,
 
-                pessoas,
-                imobiliarias,
-                getPessoas,
 
                 id_proposta, setId_proposta,
                 data, setData,
@@ -116,7 +97,8 @@ const Proposta = () => {
                 idLocalCaptacao, setIdLocalCaptacao, nomeLocalCaptacao, setNomeLocalCaptacao,
                 observacoes, setObservacoes,
 
-                empreendimentos, idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento
+                idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
+                idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas 
             }}>
                 <h3>Cadastro da Proposta</h3>
                 <div>
@@ -128,7 +110,7 @@ const Proposta = () => {
                                         <Nav.Link eventKey="dados">Dados</Nav.Link>
                                     </Nav.Item>
                                     {
-                                        proposta.id
+                                        proposta.id_proposta
                                             ?
                                             <div>
                                                 <Nav.Item>
