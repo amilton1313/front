@@ -33,6 +33,7 @@ const Proposta = () => {
     // const [empreendimentos, setEmpreendimentos] = useState([])
     const [idTabelaVendas, setIdTabelaVendas] = useState(null)
     const [tabelasVendas, setTabelasVendas] = useState([])
+    const [unidsDisponiveis, setUnidsDisponiveis] = useState([])
 
     const getProposta = (id) => {
         clienteAxios.get(`/proposta/${id}`)
@@ -54,12 +55,23 @@ const Proposta = () => {
             })
     }
 
+    const getUndsDisponiveis = (idEmpreendimento) => {
+        clienteAxios.get(`/unidsdisponiveis/${idEmpreendimento}`)
+            .then(resposta => {
+                setUnidsDisponiveis(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
         getProposta(1545)
     }, [])
 
     useEffect(() => {
         getTabelasVendas(idEmpreendimento)
+        getUndsDisponiveis(idEmpreendimento)
     }, [idEmpreendimento])
 
     useEffect(() => {

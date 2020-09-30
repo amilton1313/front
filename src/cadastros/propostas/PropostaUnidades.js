@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faFolderOpen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import clienteAxios from '../../config/axios'
 
-import BotaoLinha from './BotaoLinha'
+import MostrarUndsDisponiveis from './MostrarUndsDisponiveis'
 
 import PropostaEmpreendimento from './PropostaEmpreendimento'
 // import tabelasVendas from './lista-de-tabelas-vendas'
@@ -13,6 +13,8 @@ import './propo.css'
 import { PropostaContext } from './Proposta'
 
 const PropostaUnidades = () => {
+
+    const [exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis] = useState(false)
 
     const { idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
         idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
@@ -23,6 +25,8 @@ const PropostaUnidades = () => {
         { id_unidade: 34, blocox: 'Aurora', numero: '404', garagensx: '25 e 36', depositosx: '65 e 21' },
         { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
     ]
+
+    
 
     const salvarDados = () => {
         const prop = {
@@ -88,7 +92,10 @@ const PropostaUnidades = () => {
                             <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Unidades</th>
                             <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Garagens</th>
                             <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Depósitos</th>
-                            <th><span style={{backgroundColor: '#0069D9', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}><FontAwesomeIcon icon={faPlus} /></span></th>
+                            <th><span 
+                                    style={{backgroundColor: '#0069D9', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}
+                                    onClick={() => setExibirModalUndsDisponiveis(!exibirModalUndsDisponiveis)}
+                                ><FontAwesomeIcon icon={faPlus} /></span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,8 +133,15 @@ const PropostaUnidades = () => {
 
                     <Button sm={2} className="btn col-2" onClick={() => salvarDados()}>Salvar</Button>
                 </Col>
+                
 
             </Jumbotron>
+            {
+                <MostrarUndsDisponiveis
+                    titulo='Unidades disponíveis'
+                    setExibirModalUndsDisponiveis={setExibirModalUndsDisponiveis}
+                    exibirModalUndsDisponiveis={exibirModalUndsDisponiveis} />
+            }
 
         </>
     );
