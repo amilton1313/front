@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Table, Form, Row, Col, Button } from 'react-bootstrap'
 
 import clienteAxios from '../../config/axios'
 
@@ -9,7 +9,7 @@ import './propo.css'
 
 const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis }) => {
 
-    const { idEmpreendimento } = useContext(PropostaContext)
+    const { idEmpreendimento, id_proposta } = useContext(PropostaContext)
 
     console.log('idEmpreendimento ', idEmpreendimento)
 
@@ -21,7 +21,33 @@ const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirM
         setUndsDisponiveisFilter(undsDisponiveis)
     }, [undsDisponiveis])
 
-    const handleSelecionar = (imob) => {
+    const addUndsProposta = (prop) => {
+        console.log('add', prop)
+        clienteAxios.post(`/propostaunidade`, {prop})
+            .then(resposta => {
+                // setUndsProposta(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const handleSelecionar = (imob, garagensx, depositosx) => {
+
+        console.log('imob', imob, garagensx, depositosx)
+        const prop = {
+            id_proposta,
+            id_unidade: imob.id_unidade,
+            area: 0.00,
+            blocox: imob.blocox,
+            unidadex: imob.unidadex,
+            garagensx,
+            depositosx
+        }
+
+
+        addUndsProposta(prop)
+
         // setIdImobiliaria(imob.id_pessoa)
         // setNomeImobiliaria(imob.nome)
         setExibirModalUndsDisponiveis(false)
@@ -45,12 +71,11 @@ const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirM
             })
     }
 
+
     const getUndsDisponiveis = (idEmpreendimento) => {
         clienteAxios.get(`/unidsdisponiveis/${idEmpreendimento}`)
             .then(resposta => {
-                console.log('undsccc ')
                 setUndsDisponiveis(resposta.data)
-                console.log('unds ', undsDisponiveis)
             })
             .catch(err => {
                 console.log(err)
@@ -118,14 +143,38 @@ const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirM
             </div>
 
             <div className="mostrar-list">
-                {imobs.map(
-                    imob => <div className="linha" onClick={() => handleSelecionar(imob)}>{imob.numero}</div>
-                )}
+                <Table size="sm" striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Bloco</th>
+                            <th>Unidade</th>
+                            <th>Garagens</th>
+                            <th>Depósitos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
+                        {imobs.map(
+                            (imob) => {
+                                let gars = '', deps = ''
+                                const garagensx = imob.garagensx ? imob.garagensx.map(und => gars + ' ' + und) : ''
+                                const depositosx = imob.depositosx ? imob.depositosx.map(und => deps + ' ' + und) : ''
+                                return (
+                                    (<tr onClick={() => handleSelecionar(imob, garagensx, depositosx)}>
+                                        <td>{imob.blocox}</td>
+                                        <td>{imob.unidadex} </td>
+                                        <td>{garagensx}</td>
+                                        <td>{depositosx}</td>
+                                    </tr>)
+                                )
+    
+                            }
+                        )}
+                    </tbody>
+                </Table>
             </div>
             <div className="text-right">
                 <Button sm={2} className="btn col-2" onClick={() => setExibirModalUndsDisponiveis(false)}>Fechar</Button>
-
             </div>
 
         </div>

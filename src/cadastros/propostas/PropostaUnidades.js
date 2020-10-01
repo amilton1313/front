@@ -15,26 +15,22 @@ import { PropostaContext } from './Proposta'
 const PropostaUnidades = () => {
 
     const [exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis] = useState(false)
+    const [undsProposta, setUndsProposta] = useState([])
 
-    const { idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
+    const { id_proposta, idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
         idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
     } = useContext(PropostaContext)
-
 
     const unidades = [
         { id_unidade: 34, blocox: 'Aurora', numero: '404', garagensx: '25 e 36', depositosx: '65 e 21' },
         { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
     ]
 
-    
-
     const salvarDados = () => {
         const prop = {
             id_empreendimento: idEmpreendimento,
             id_tabela_vendas: idTabelaVendas
         }
-        console.log('salvando dados...', prop)
-
         clienteAxios.put(`/proposta/${1545}`, prop)
             .then(resposta => {
                 // setEmpreendimentos(resposta.data)
@@ -44,9 +40,49 @@ const PropostaUnidades = () => {
             })
     }
 
+    const getUndsProposta = (id_proposta) => {
+        clienteAxios.get(`/propostaunds/${id_proposta}`)
+            .then(resposta => {
+                setUndsProposta(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const addUndsProposta = (prop) => {
+        console.log('add', prop)
+        // clienteAxios.post(`/propostaunidade`, {prop})
+        //     .then(resposta => {
+        //         setUndsProposta(resposta.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+    }
+
+    const delUndsProposta = (prop) => {
+        clienteAxios.delete(`/propostaunidade/${prop.id_proposta}/${prop.id_unidade}`)
+            .then(resposta => {
+                setUndsProposta(resposta.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const handleTabelaVendas = event => {
         setIdTabelaVendas(event.target.value)
     }
+
+    const handleSelectUnidade = event => {
+        setIdTabelaVendas(event.target.value)
+        setExibirModalUndsDisponiveis(!exibirModalUndsDisponiveis)
+    }
+
+    useEffect(() => {
+        getUndsProposta(id_proposta)
+    }, [id_proposta])
 
     return (
         <>
@@ -94,28 +130,23 @@ const PropostaUnidades = () => {
                             <th style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>Depósitos</th>
                             <th><span 
                                     style={{backgroundColor: '#0069D9', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}
-                                    onClick={() => setExibirModalUndsDisponiveis(!exibirModalUndsDisponiveis)}
+                                    onClick={(event) => handleSelectUnidade(event)}
                                 ><FontAwesomeIcon icon={faPlus} /></span></th>
                         </tr>
                     </thead>
                     <tbody>
                     {
-                        unidades.map(und => (
+                        undsProposta.map(und => (
                             <tr>
                                 <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.blocox}</td>
-                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.numero}</td>
+                                <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.unidadex}</td>
                                 <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.garagensx}</td>
                                 <td style={{backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white"}}>{und.depositosx}</td>
                                 <td >
-                                    {/* <BotaoLinha
-                                        disabled={false}
-                                        classe="bot btn-sm btn-light"
-                                        icone={faMinus}
-                                        onClick={() => setIdEmpreendimento(null)}
-                                        dica='Excluir esta unidade'
-                                        posicao='right'
-                                    /> */}
-                                    <span style={{backgroundColor: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}><FontAwesomeIcon icon={faMinus} /></span>
+                                    <span 
+                                        style={{backgroundColor: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px"}}
+                                        onClick={() => delUndsProposta({id_proposta: id_proposta, id_unidade: und.id_unidade})}
+                                    ><FontAwesomeIcon icon={faMinus} /></span>
 
                                 </td>
                             </tr>
@@ -127,7 +158,6 @@ const PropostaUnidades = () => {
                 </Table>
                 </Col>
                 </div>
-
                 
                 <Col sm={12} className="text-center">
 
@@ -140,7 +170,8 @@ const PropostaUnidades = () => {
                 <MostrarUndsDisponiveis
                     titulo='Unidades disponíveis'
                     setExibirModalUndsDisponiveis={setExibirModalUndsDisponiveis}
-                    exibirModalUndsDisponiveis={exibirModalUndsDisponiveis} />
+                    exibirModalUndsDisponiveis={exibirModalUndsDisponiveis} 
+                    addUndsProposta={addUndsProposta}/>
             }
 
         </>
