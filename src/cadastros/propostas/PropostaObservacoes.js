@@ -6,13 +6,13 @@ import { faMinus, faPlus, faFolderOpen, faAngleDoubleLeft, faAngleDoubleRight } 
 
 import './propo.css'
 
-const PropostaValores = () => {
+const PropostaObservacoes = () => {
 
     return (
         <>
             <Jumbotron>
                 <h1>
-                  valores  
+                Observações  
                 </h1>
 
             </Jumbotron>
@@ -21,4 +21,4 @@ const PropostaValores = () => {
     );
 }
 
-export default PropostaValores;
+export default PropostaObservacoes;

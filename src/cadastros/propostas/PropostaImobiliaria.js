@@ -15,7 +15,8 @@ const PropostaImobiliaria = () => {
 
     const [classe, setClasse] = useState('gr')
 
-    const onLimpar = () => {
+    const onLimpar = (e) => {
+        e.preventDefault()
         setIdImobiliaria(null)
         setNomeImobiliaria('')
     }
@@ -26,9 +27,10 @@ const PropostaImobiliaria = () => {
                 as={Row}
                 className="gr"
             >
-                <Form.Label column sm={2} className="lab">Imobiliária : </Form.Label>
+                <Form.Label size="sm" column sm={2} className="lab">Imobiliária : </Form.Label>
                 <Col sm={7}>
                     <Form.Control
+                        size="sm"
                         type="text"
                         placeholder="Clique para selecionar uma Imobiliária"
                         name="id_Imobiliaria"
@@ -46,11 +48,10 @@ const PropostaImobiliaria = () => {
                     {
                         (nomeImobiliaria !== '')
                             ? <div className="d-flex">
-                                <Button
-                                    disabled={false}
-                                    className="bot btn-light"
-                                    onClick={() => onLimpar()}
-                                ><FontAwesomeIcon icon={faMinus} /></Button>
+                                <button
+                                    style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
+                                    onClick={(e) => onLimpar(e)}
+                                ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                             : null
                     }

@@ -1,10 +1,15 @@
 import React, { useState, useEffect, createContext } from 'react'
-import { Tab, Row, Col, Nav } from 'react-bootstrap'
+import { Form, Button, FormControl, Navbar, NavDropdown, Tab, Row, Col, Nav } from 'react-bootstrap'
 import clienteAxios from '../../config/axios'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faMinus, faPlus, faStepForward, faStepBackward, faFastForward, faFastBackward } from '@fortawesome/free-solid-svg-icons'
+import './propo.css'
+
 import PropostaDados from './PropostaDados'
-import PropostaUnidades from './PropostaUnidades'
+import PropostaObservacoes from './PropostaObservacoes'
 import PropostaValores from './PropostaValores'
+import PropostaNavegacao from './PropostaNavegacao'
 
 export const PropostaContext = createContext()
 
@@ -14,7 +19,7 @@ const Proposta = () => {
     // const [imobiliarias, setImobiliarias] = useState([])
 
     const [proposta, SetProposta] = useState({})
-    const [id_proposta, setId_proposta] = useState(null)
+    const [id_proposta, setId_proposta] = useState(1545)
     const [data, setData] = useState(null)
     const [idImobiliaria, setIdImobiliaria] = useState(null)
     const [nomeImobiliaria, setNomeImobiliaria] = useState('')
@@ -38,7 +43,11 @@ const Proposta = () => {
     const getProposta = (id) => {
         clienteAxios.get(`/proposta/${id}`)
             .then(resposta => {
-                SetProposta(resposta.data[0])
+                if (resposta.data[0]) {
+                    SetProposta(resposta.data[0])
+                } else {
+                    SetProposta({})
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -66,8 +75,8 @@ const Proposta = () => {
     }
 
     useEffect(() => {
-        getProposta(1545)
-    }, [])
+        if (id_proposta) { getProposta(id_proposta) }
+    }, [id_proposta])
 
     useEffect(() => {
         getTabelasVendas(idEmpreendimento)
@@ -92,7 +101,7 @@ const Proposta = () => {
         setNomeEmpreendimento(proposta.nomeempreendimento)
         setIdTabelaVendas(proposta.id_tabela_vendas)
     }, [proposta])
-        
+
     return (
         <>
             <PropostaContext.Provider value={{
@@ -100,7 +109,7 @@ const Proposta = () => {
                 SetProposta,
 
 
-                id_proposta, setId_proposta,
+                id_proposta, setId_proposta, getProposta,
                 data, setData,
                 idImobiliaria, setIdImobiliaria, nomeImobiliaria, setNomeImobiliaria,
                 idCorretor, setIdCorretor, nomeCorretor, setNomeCorretor,
@@ -110,10 +119,44 @@ const Proposta = () => {
                 observacoes, setObservacoes,
 
                 idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
-                idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas 
+                idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
             }}>
-                <h3>Cadastro da Proposta</h3>
-                <div>
+
+                <div style={{ backgroundColor: 'steelblue', height: '60px' }}>
+                    <Navbar collapseOnSelect expand="lg" bg="steelblue" variant="dark" >
+                        <Navbar.Brand href="#home">Cadastro da Proposta</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Nav.Link href="#features">Consultas</Nav.Link>
+                                <Nav.Link href="#pricing">Proponente</Nav.Link>
+                                <NavDropdown title="Propostas" id="collasible-nav-dropdown">
+                                    <NavDropdown.Item href="#action/3.1">Nova Proposta</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2">aaaaaaa</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.3">bbbbbbb</NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href="#action/3.4">Outro assunto</NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link href="#deets">
+                                    <PropostaNavegacao />
+                                </Nav.Link>
+                                <Nav.Link eventKey={2} href="#memes">
+
+                                    <Form inline>
+                                        <FormControl size="sm" type="text" placeholder="Digite o núm. da proposta" className="mr-sm-2" />
+                                        <Button size="sm" variant="outline-primary">Procurar</Button>
+                                    </Form>
+
+                                </Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+
+                </div>
+
+                <div style={{ marginTop: '5px' }}>
                     <Tab.Container id="left-tabs-example" defaultActiveKey="dados">
                         <Row>
                             <Col sm={2}>
@@ -126,10 +169,10 @@ const Proposta = () => {
                                             ?
                                             <div>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="unidades">Unidades</Nav.Link>
+                                                    <Nav.Link eventKey="valores">Valores</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="valores">Valores</Nav.Link>
+                                                    <Nav.Link eventKey="observacoes">Observações</Nav.Link>
                                                 </Nav.Item>
                                             </div>
                                             : null
@@ -143,11 +186,11 @@ const Proposta = () => {
                                     <Tab.Pane eventKey="dados">
                                         <PropostaDados />
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="unidades">
-                                        <PropostaUnidades />
-                                    </Tab.Pane>
                                     <Tab.Pane eventKey="valores">
                                         <PropostaValores />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="observacoes">
+                                        <PropostaObservacoes />
                                     </Tab.Pane>
                                 </Tab.Content>
                             </Col>

@@ -21,10 +21,10 @@ const PropostaUnidades = () => {
         idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
     } = useContext(PropostaContext)
 
-    const unidades = [
-        { id_unidade: 34, blocox: 'Aurora', numero: '404', garagensx: '25 e 36', depositosx: '65 e 21' },
-        { id_unidade: 35, blocox: 'Aurora', numero: '502', garagensx: '25 e 40', depositosx: '70 e 75' },
-    ]
+
+    // useEffect(() => {
+    //     getUndsProposta(id_proposta)
+    // }, [exibirModalUndsDisponiveis])
 
     const salvarDados = () => {
         const prop = {
@@ -52,19 +52,20 @@ const PropostaUnidades = () => {
 
     const addUndsProposta = (prop) => {
         console.log('add', prop)
-        // clienteAxios.post(`/propostaunidade`, {prop})
-        //     .then(resposta => {
-        //         setUndsProposta(resposta.data)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
+        clienteAxios.post(`/propostaunidade`, {prop})
+            .then(resposta => {
+                getUndsProposta(id_proposta)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const delUndsProposta = (prop) => {
         clienteAxios.delete(`/propostaunidade/${prop.id_proposta}/${prop.id_unidade}`)
             .then(resposta => {
                 setUndsProposta(resposta.data)
+                getUndsProposta(id_proposta)
             })
             .catch(err => {
                 console.log(err)
@@ -77,6 +78,7 @@ const PropostaUnidades = () => {
 
     const handleSelectUnidade = event => {
         setIdTabelaVendas(event.target.value)
+        console.log('item seleionado')
         setExibirModalUndsDisponiveis(!exibirModalUndsDisponiveis)
     }
 
@@ -118,8 +120,14 @@ const PropostaUnidades = () => {
                     </Form.Group>
 
                 </Form>
-                <div className="d-flex">
-                <Col sm={2}></Col>
+                <Col sm={12} className="text-center">
+
+                    <Button sm={2} className="btn col-2" onClick={() => salvarDados()}>Salvar</Button>
+                </Col>
+                </Jumbotron>
+                <Jumbotron style={{paddingTop: '20px', paddingLeft: 0}}>
+                <div className="d-flex "  style={{marginTop: 0}}>
+                <Col sm={2} className="lab gr">Unidades: </Col>
                 <Col sm={9}>
                 <Table borderless size="sm">
                     <thead>
@@ -159,10 +167,6 @@ const PropostaUnidades = () => {
                 </Col>
                 </div>
                 
-                <Col sm={12} className="text-center">
-
-                    <Button sm={2} className="btn col-2" onClick={() => salvarDados()}>Salvar</Button>
-                </Col>
                 
 
             </Jumbotron>
@@ -171,7 +175,8 @@ const PropostaUnidades = () => {
                     titulo='Unidades disponíveis'
                     setExibirModalUndsDisponiveis={setExibirModalUndsDisponiveis}
                     exibirModalUndsDisponiveis={exibirModalUndsDisponiveis} 
-                    addUndsProposta={addUndsProposta}/>
+                    addUndsProposta={addUndsProposta}
+                    getUndsProposta={getUndsProposta}/>
             }
 
         </>

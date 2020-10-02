@@ -7,11 +7,9 @@ import { PropostaContext } from './Proposta'
 
 import './propo.css'
 
-const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis }) => {
+const MostrarUndsDisponiveis = ({ titulo, addUndsProposta, exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis }) => {
 
     const { idEmpreendimento, id_proposta } = useContext(PropostaContext)
-
-    console.log('idEmpreendimento ', idEmpreendimento)
 
     const [buscar, setBuscar] = useState('')
     const [undsDisponiveis, setUndsDisponiveis] = useState([])
@@ -21,30 +19,33 @@ const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirM
         setUndsDisponiveisFilter(undsDisponiveis)
     }, [undsDisponiveis])
 
-    const addUndsProposta = (prop) => {
-        console.log('add', prop)
-        clienteAxios.post(`/propostaunidade`, {prop})
-            .then(resposta => {
-                // setUndsProposta(resposta.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+    // const addUndsProposta = (prop) => {
+    //     console.log('add', prop)
+    //     clienteAxios.post(`/propostaunidade`, {prop})
+    //         .then(resposta => {
+    //             // setUndsProposta(resposta.data)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
-    const handleSelecionar = (imob, garagensx, depositosx) => {
+    const handleSelecionar = (imob) => {
 
-        console.log('imob', imob, garagensx, depositosx)
+        const gars = imob.garagensx ? imob.garagensx.toString() : ''
+        const deps = imob.depositosx ? imob.depositosx.toString() : ''
+
         const prop = {
             id_proposta,
             id_unidade: imob.id_unidade,
             area: 0.00,
             blocox: imob.blocox,
             unidadex: imob.unidadex,
-            garagensx,
-            depositosx
+            garagensx: gars,
+            depositosx: deps
         }
 
+        console.log('prop  ', prop)
 
         addUndsProposta(prop)
 
@@ -160,10 +161,10 @@ const MostrarUndsDisponiveis = ({ titulo, exibirModalUndsDisponiveis, setExibirM
                                 const garagensx = imob.garagensx ? imob.garagensx.map(und => gars + ' ' + und) : ''
                                 const depositosx = imob.depositosx ? imob.depositosx.map(und => deps + ' ' + und) : ''
                                 return (
-                                    (<tr onClick={() => handleSelecionar(imob, garagensx, depositosx)}>
+                                    (<tr onClick={() => handleSelecionar(imob)}>
                                         <td>{imob.blocox}</td>
                                         <td>{imob.unidadex} </td>
-                                        <td>{garagensx}</td>
+                                        <td>{garagensx.toString()}</td>
                                         <td>{depositosx}</td>
                                     </tr>)
                                 )
