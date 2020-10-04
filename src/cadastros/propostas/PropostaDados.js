@@ -23,7 +23,6 @@ const PropostaDados = () => {
 
     const [exibirModalUndsDisponiveis, setExibirModalUndsDisponiveis] = useState(false)
     const [undsProposta, setUndsProposta] = useState([])
-    const [edNumero, setEdNumero] = useState('')
 
     const { getProposta, id_proposta, setId_proposta, data, setData,
         idImobiliaria, setIdImobiliaria, nomeImobiliaria, setNomeImobiliaria,
@@ -46,9 +45,9 @@ const PropostaDados = () => {
         setObservacoes(event.target.value)
     }
 
-    const handleEdNumero = event => {
-        setEdNumero(event.target.value)
-    }
+    // const handleEdNumero = event => {
+    //     setEdNumero(event.target.value)
+    // }
 
     const salvarDados = () => {
         const prop = {
@@ -70,58 +69,6 @@ const PropostaDados = () => {
             })
     }
 
-    const onBuscarProposta = () => {
-        getProposta(edNumero)
-        setEdNumero('')
-    }
-
-    const firstProposta = (e) => {
-        e.preventDefault()
-        clienteAxios.get(`/firstindice/propostas/id_proposta`)
-            .then(resposta => {
-                const { min } = resposta.data[0]
-                setId_proposta(min)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    const prevProposta = (e) => {
-        e.preventDefault()
-        clienteAxios.get(`/previndice/propostas/id_proposta/${id_proposta}`)
-            .then(resposta => {
-                const { id_proposta } = resposta.data[0]
-                setId_proposta(id_proposta)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    const nextProposta = (e) => {
-        e.preventDefault()
-        clienteAxios.get(`/nextindice/propostas/id_proposta/${id_proposta}`)
-            .then(resposta => {
-                const { id_proposta } = resposta.data[0]
-                setId_proposta(id_proposta)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    const lastProposta = (e) => {
-        e.preventDefault()
-        clienteAxios.get(`/lastindice/propostas/id_proposta`)
-            .then(resposta => {
-                const { max } = resposta.data[0]
-                setId_proposta(max)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
 
     const handleTabelaVendas = event => {
         setIdTabelaVendas(event.target.value)
@@ -193,30 +140,6 @@ const PropostaDados = () => {
                                 readOnly
                             />
                         </Col>
-                        {/* navegacao */}
-                        <Col sm={5} className="text-right">
-                            <button
-                                style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                                onClick={(e) => firstProposta(e)}
-                            ><FontAwesomeIcon icon={faFastBackward} /></button>
-
-                            <button
-                                style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                                onClick={(e) => prevProposta(e)}
-                            ><FontAwesomeIcon icon={faStepBackward} /></button>
-
-                            <button
-                                style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                                onClick={(e) => nextProposta(e)}
-                            ><FontAwesomeIcon icon={faStepForward} /></button>
-
-                            <button
-                                style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                                onClick={(e) => lastProposta(e)}
-                            ><FontAwesomeIcon icon={faFastForward} /></button>
-                        </Col>
-
-
                         
                     </Form.Group>
 
@@ -234,25 +157,6 @@ const PropostaDados = () => {
                             />
                         </Col>
                         <Col sm={3}></Col>
-                        {/* Busca */}
-
-                        <Col sm={2}>
-                            {/* <Form.Label htmlFor="inlineFormInputGroup" srOnly>
-                                Username
-                        </Form.Label> */}
-                            <InputGroup className="mb-2">
-                                <FormControl 
-                                    size="sm"
-                                    id="inlineFormInputGroup" 
-                                    placeholder=""
-                                    value={edNumero}
-                                    onChange={handleEdNumero}
-                                />
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text onClick={() => onBuscarProposta()}><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
-                                </InputGroup.Prepend>
-                            </InputGroup>
-                        </Col>
 
 
                     </Form.Group>

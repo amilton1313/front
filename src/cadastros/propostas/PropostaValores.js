@@ -5,17 +5,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faFolderOpen, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 
 import './propo.css'
+import PropostaValores1 from './PropostaValores1'
+import PropostaValores2 from './PropostaValores2'
 
 const PropostaValores = () => {
 
+    const [tipo, setTipo] = useState(1)
+    const [valor, setValor] = useState(null)
+
     return (
         <>
-            <Jumbotron>
-                <h1>
-                  valores  
-                </h1>
 
-            </Jumbotron>
+        <div>
+            <div>
+        <PropostaValores1 />
+            </div>
+            <div>
+        <PropostaValores2 />
+            </div>
+
+        </div>
+
 
         </>
     );

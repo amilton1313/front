@@ -108,7 +108,6 @@ const Proposta = () => {
                 proposta,
                 SetProposta,
 
-
                 id_proposta, setId_proposta, getProposta,
                 data, setData,
                 idImobiliaria, setIdImobiliaria, nomeImobiliaria, setNomeImobiliaria,
@@ -144,10 +143,10 @@ const Proposta = () => {
                                 </Nav.Link>
                                 <Nav.Link eventKey={2} href="#memes">
 
-                                    <Form inline>
+                                    {/* <Form inline>
                                         <FormControl size="sm" type="text" placeholder="Digite o núm. da proposta" className="mr-sm-2" />
-                                        <Button size="sm" variant="outline-primary">Procurar</Button>
-                                    </Form>
+                                        <button className="btn btn-success" size="sm" variant="outline-success">Procurar</button>
+                                    </Form> */}
 
                                 </Nav.Link>
                             </Nav>
