@@ -11,7 +11,10 @@ import PropostaObservacoes from './PropostaObservacoes'
 import PropostaValores from './PropostaValores'
 import PropostaNavegacao from './PropostaNavegacao'
 
+
 export const PropostaContext = createContext()
+
+
 
 const Proposta = () => {
 
@@ -35,10 +38,11 @@ const Proposta = () => {
 
     const [idEmpreendimento, setIdEmpreendimento] = useState(null)
     const [nomeEmpreendimento, setNomeEmpreendimento] = useState('')
-    // const [empreendimentos, setEmpreendimentos] = useState([])
     const [idTabelaVendas, setIdTabelaVendas] = useState(null)
     const [tabelasVendas, setTabelasVendas] = useState([])
     const [unidsDisponiveis, setUnidsDisponiveis] = useState([])
+
+    const [parcelas, setParcelas] = useState([])
 
     const getProposta = (id) => {
         clienteAxios.get(`/proposta/${id}`)
@@ -74,8 +78,21 @@ const Proposta = () => {
             })
     }
 
+    // const getParcelas = (id_proposta) => {
+    //     clienteAxios.get(`/propostaparcelas/${id_proposta}`)
+    //         .then(resposta => {
+    //             setParcelas(resposta.data)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
+
     useEffect(() => {
-        if (id_proposta) { getProposta(id_proposta) }
+        if (id_proposta) { 
+            getProposta(id_proposta) 
+            // getParcelas(id_proposta)
+        }
     }, [id_proposta])
 
     useEffect(() => {
@@ -102,6 +119,8 @@ const Proposta = () => {
         setIdTabelaVendas(proposta.id_tabela_vendas)
     }, [proposta])
 
+   
+
     return (
         <>
             <PropostaContext.Provider value={{
@@ -118,7 +137,8 @@ const Proposta = () => {
                 observacoes, setObservacoes,
 
                 idEmpreendimento, setIdEmpreendimento, nomeEmpreendimento, setNomeEmpreendimento,
-                idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas
+                idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas,
+                parcelas, setParcelas
             }}>
 
                 <div style={{ backgroundColor: 'steelblue', height: '60px' }}>

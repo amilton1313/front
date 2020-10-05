@@ -1,21 +1,47 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Row, Col, Button, Jumbotron, Table } from 'react-bootstrap'
-import ReactList from 'react-list'
+import React, { useState, useEffect, useContext } from 'react'
+import clienteAxios from '../../config/axios'
+import { Jumbotron, Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus, faPlus, faFolderOpen, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './propo.css'
 
-const PropostaValores2 = () => {
+import { PropostaContext } from './Proposta'
+
+import ModelPropostaParcela from './models/ModelPropostaParcela'
+
+const PropostaValores2 = ({ getParcelas, parcela, setParcela }) => {
+
+    const { id_proposta, parcelas, setParcelas } = useContext(PropostaContext)
 
     const [tipo, setTipo] = useState(1)
     const [valor, setValor] = useState(null)
+    const [moParcela, setMoParcela] = useState({})
 
-    const itensValores = [
-        {id: 1, tipo: "Ato", valor: 123456.00, vcto: '01/01/2020', qtde: 10, periodo: 'Anual', total: 123456.00},
-        {id: 1, tipo: "Mensais", valor: 123456.00, vcto: '01/01/2020', qtde: 10, periodo: 'Anual', total: 123456.00},
-        {id: 1, tipo: "Reforços", valor: 123456.00, vcto: '01/01/2020', qtde: 10, periodo: 'Anual', total: 123456.00}
-    ]
+
+
+    const delParcela = (id_parcela) => {
+        clienteAxios.delete(`/propostaproposto/${id_parcela}`)
+            .then(resposta => {
+                getParcelas(id_proposta)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    useEffect(() => {
+        if (id_proposta) { 
+            getParcelas(id_proposta)
+        }
+    }, [id_proposta])
+
+    const handleSelecionar = (item) => {
+        setParcela(new ModelPropostaParcela(
+            item.id_parcela, item.id_proposta, item.id_tipo, item.inicio, item.valor, 
+            item.qtde, item.vcto_primeira, item.reforco_tipo, item.valorsem))
+    }
+
 
     return (
         <>
@@ -37,18 +63,18 @@ const PropostaValores2 = () => {
                 </thead>
                 <tbody>
                     {
-                        itensValores.map(item => (
-                            <tr>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white", paddingLeft: '10px' }}>{item.tipo}</td>
+                        parcelas.map(item => (
+                            <tr onClick={() => handleSelecionar(item)}>
+                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white", paddingLeft: '10px' }}>{item.descricaotipo}</td>
                                 <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.valor}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.vcto}</td>
+                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.vcto_primeira}</td>
                                 <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.qtde}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.periodo}</td>
+                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.descricaoreforco}</td>
                                 <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.total}</td>
                                 <td >
                                     <span
                                         style={{ backgroundColor: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                                        onClick={() => {}}
+                                            onClick={() => delParcela(item.id_parcela)}
                                         ><FontAwesomeIcon icon={faMinus} /></span>
 
                                 </td>
