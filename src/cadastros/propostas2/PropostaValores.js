@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react'
+import { Jumbotron } from 'react-bootstrap'
 import clienteAxios from '../../config/axios'
 import { PropostaContext } from './Proposta'
 import './propo.css'
@@ -36,14 +37,16 @@ const PropostaValores = () => {
     }
 
     const addParcela = (id_proposta) => {
-        const parc = {inicio, qtde, valor, id_proposta, id_tipo, valorsem: null,
-             vcto_primeira, reforco_tipo}
-             console.log('parc', parc)
+        const parc = {
+            inicio, qtde, valor, id_proposta, id_tipo, valorsem: null,
+            vcto_primeira, reforco_tipo
+        }
+        console.log('parc', parc)
         clienteAxios.post(`/propostaproposto`, parc)
             .then(resposta => {
                 getParcelas(id_proposta)
                 setMostrarModal(false)
-                setNovaProposta(false) 
+                setNovaProposta(false)
             })
             .catch(err => {
                 console.log(err)
@@ -51,12 +54,14 @@ const PropostaValores = () => {
     }
 
     const updParcela = (id_parcela) => {
-        clienteAxios.put(`/propostaproposto/${id_parcela}`, {inicio, qtde, valor, id_proposta, id_tipo,
-            vcto_primeira, reforco_tipo})
+        clienteAxios.put(`/propostaproposto/${id_parcela}`, {
+            inicio, qtde, valor, id_proposta, id_tipo,
+            vcto_primeira, reforco_tipo
+        })
             .then(resposta => {
                 getParcelas(id_proposta)
                 setMostrarModal(false)
-                setNovaProposta(false) 
+                setNovaProposta(false)
             })
             .catch(err => {
                 console.log(err)
@@ -67,7 +72,7 @@ const PropostaValores = () => {
         clienteAxios.delete(`/propostaproposto/${id_parcela}`)
             .then(resposta => {
                 getParcelas(id_proposta)
-                setNovaProposta(false) 
+                setNovaProposta(false)
             })
             .catch(err => {
                 console.log(err)
@@ -86,9 +91,23 @@ const PropostaValores = () => {
                 novaProposta, setNovaProposta,
                 mostrarModal, setMostrarModal
             }}>
+                <div className="d-flex fx-lateral" >
+                <div className="fx-lateral-txt" >
+                    <span style={{marginLeft: '10px'}}>Valores</span>
+                    <br />
+                    <span style={{marginLeft: '10px'}}>Propostos</span>
+                    </div>
+                    <div style={{ flex: 7 }} >
+                        <Jumbotron
+                            fluid
+                            style={{ marginBottom: '10px', paddingTop: '10px' }}
+                        >
+                            <PropostaValoresModal />
+                            <PropostaValoresLista />
 
-                <PropostaValoresModal />
-                <PropostaValoresLista />
+                        </Jumbotron>
+                    </div>
+                </div>
 
             </PropostaValoresContext.Provider>
         </>

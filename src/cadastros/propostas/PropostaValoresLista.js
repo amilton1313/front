@@ -7,28 +7,20 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import './propo.css'
 
 import { PropostaContext } from './Proposta'
+import { PropostaValoresContext } from './PropostaValores'
 
 import ModelPropostaParcela from './models/ModelPropostaParcela'
 
-const PropostaValores2 = ({ getParcelas, parcela, setParcela }) => {
+const PropostaValoresLista = () => {
 
-    const { id_proposta, parcelas, setParcelas } = useContext(PropostaContext)
+    const { id_proposta, parcelas } = useContext(PropostaContext)
+    const { getParcelas, addParcela, updParcela, delParcela,
+        parcela, setParcela, setIdTipo, setReforcoTipo,
+        novaProposta, setNovaProposta, salvar, setSalvar,
+        mostrarModal, setMostrarModal
+     } = useContext(PropostaValoresContext)
 
-    const [tipo, setTipo] = useState(1)
-    const [valor, setValor] = useState(null)
-    const [moParcela, setMoParcela] = useState({})
-
-
-
-    const delParcela = (id_parcela) => {
-        clienteAxios.delete(`/propostaproposto/${id_parcela}`)
-            .then(resposta => {
-                getParcelas(id_proposta)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+    
 
     useEffect(() => {
         if (id_proposta) { 
@@ -40,9 +32,16 @@ const PropostaValores2 = ({ getParcelas, parcela, setParcela }) => {
         setParcela(new ModelPropostaParcela(
             item.id_parcela, item.id_proposta, item.id_tipo, item.inicio, item.valor, 
             item.qtde, item.vcto_primeira, item.reforco_tipo, item.valorsem))
+
+        setNovaProposta(false)
+        setMostrarModal(true)
     }
 
-
+    const handleLimpar = () => {
+        setParcela(new ModelPropostaParcela('',{id_proposta},1,'','','','',1,'') )
+        setNovaProposta(true)
+        setMostrarModal(!mostrarModal)
+    }
     return (
         <>
             <Jumbotron style={{ minHeight: '200px', paddingLeft: 0, paddingTop: '10px' }}>
@@ -57,20 +56,20 @@ const PropostaValores2 = ({ getParcelas, parcela, setParcela }) => {
                         <th style={{ width: "16%", backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>Total</th>
                         <th><span
                             style={{ backgroundColor: '#0069D9', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
-                            onClick={(event) => {}}
+                            onClick={() => handleLimpar()}
                         ><FontAwesomeIcon icon={faPlus} /></span></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         parcelas.map(item => (
-                            <tr onClick={() => handleSelecionar(item)}>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white", paddingLeft: '10px' }}>{item.descricaotipo}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.valor}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.vcto_primeira}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.qtde}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.descricaoreforco}</td>
-                                <td style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.total}</td>
+                            <tr>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white", paddingLeft: '10px' }}>{item.descricaotipo}</td>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.valor}</td>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.vcto_primeira}</td>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.qtde}</td>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.descricaoreforco}</td>
+                                <td  onClick={() => handleSelecionar(item)} style={{ backgroundColor: "lightgrey", color: 'grey', borderBottom: "1px solid white" }}>{item.total}</td>
                                 <td >
                                     <span
                                         style={{ backgroundColor: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
@@ -91,4 +90,4 @@ const PropostaValores2 = ({ getParcelas, parcela, setParcela }) => {
     );
 }
 
-export default PropostaValores2;
+export default PropostaValoresLista;

@@ -46,10 +46,10 @@ const PropostaCorretor = () => {
                     {
                         (nomeCorretor !== '')
                             ? <div className="d-flex">
-                                <button
-                                    style={{ border: 'none', backgroundColor: 'transparent', color: 'blue', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
+                                <span
+                                    className="botao-minus"
                                     onClick={(e) => onLimpar(e)}
-                                ><FontAwesomeIcon icon={faMinus} /></button>
+                                ><FontAwesomeIcon icon={faMinus} /></span>
                             </div>
                             : null
                     }

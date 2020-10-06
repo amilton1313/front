@@ -5,6 +5,7 @@ import clienteAxios from '../../config/axios'
 import './propo.css'
 
 import PropostaDados from './PropostaDados'
+import PropostaUnidades from './PropostaUnidades'
 import PropostaObservacoes from './PropostaObservacoes'
 import PropostaValores from './PropostaValores'
 import PropostaNavegacao from './PropostaNavegacao'
@@ -73,8 +74,8 @@ const Proposta = () => {
     }
 
     useEffect(() => {
-        if (id_proposta) { 
-            getProposta(id_proposta) 
+        if (id_proposta) {
+            getProposta(id_proposta)
             // getParcelas(id_proposta)
         }
     }, [id_proposta])
@@ -122,75 +123,13 @@ const Proposta = () => {
                 idTabelaVendas, setIdTabelaVendas, tabelasVendas, setTabelasVendas,
                 parcelas, setParcelas
             }}>
-
-                <div style={{ backgroundColor: 'steelblue', height: '60px' }}>
-                    <Navbar collapseOnSelect expand="lg" bg="steelblue" variant="dark" >
-                        <Navbar.Brand href="#home">Cadastro da Proposta</Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav">
-                            <Nav className="mr-auto">
-                                <Nav.Link href="#features">Consultas</Nav.Link>
-                                <Nav.Link href="#pricing">Proponente</Nav.Link>
-                                <NavDropdown title="Propostas" id="collasible-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Nova Proposta</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">aaaaaaa</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">bbbbbbb</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.4">Outro assunto</NavDropdown.Item>
-                                </NavDropdown>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link href="#deets">
-                                    <PropostaNavegacao />
-                                </Nav.Link>
-                                <Nav.Link eventKey={2} href="#memes">
-
-                                </Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
-
-                </div>
-
-                <div style={{ marginTop: '5px' }}>
-                    <Tab.Container id="left-tabs-example" defaultActiveKey="dados">
-                        <Row>
-                            <Col sm={2}>
-                                <Nav variant="pills" className="flex-column">
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="dados">Dados</Nav.Link>
-                                    </Nav.Item>
-                                    {
-                                        proposta.id_proposta
-                                            ?
-                                            <div>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="valores">Valores</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="observacoes">Observações</Nav.Link>
-                                                </Nav.Item>
-                                            </div>
-                                            : null
-                                    }
-
-                                </Nav>
-                            </Col>
-                            <Col sm={9}>
-                                <Tab.Content>
-                                    <Tab.Pane eventKey="dados">
-                                        <PropostaDados />
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="valores">
-                                        <PropostaValores />
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="observacoes">
-                                        <PropostaObservacoes />
-                                    </Tab.Pane>
-                                </Tab.Content>
-                            </Col>
-                        </Row>
-                    </Tab.Container>
+                <div style={{ backgroundColor: 'grey' }}>
+                    <PropostaNavegacao />
+                    <div className="conteudo">
+                        <PropostaDados />
+                        <PropostaUnidades />
+                        <PropostaValores />
+                    </div>
                 </div>
             </PropostaContext.Provider>
         </>

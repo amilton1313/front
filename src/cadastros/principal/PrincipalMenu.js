@@ -32,6 +32,10 @@ const PrincipalMenu = () => {
                                 Propostas
                             </Link>
                             &nbsp;
+                            <Link to={"/proposta2"}  className="btn btn-primary" >
+                                Propostas2
+                            </Link>
+                            &nbsp;
                         </>
                     : null
 
