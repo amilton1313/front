@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { Navbar, NavDropdown, Tab, Row, Col, Nav } from 'react-bootstrap'
 import clienteAxios from '../../config/axios'
+import { Link } from 'react-router-dom'
 
 import './propo.css'
 
@@ -129,6 +130,11 @@ const Proposta = () => {
                         <PropostaDados />
                         <PropostaUnidades />
                         <PropostaValores />
+                    </div>
+                    <div>
+                    <Link to={"/pessoanew"}  className="btn btn-primary" >
+                                Pessoa
+                            </Link>
                     </div>
                 </div>
             </PropostaContext.Provider>

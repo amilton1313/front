@@ -21,6 +21,7 @@ import Intranet from '../intranet/Intranet'
 import Erp from '../erp/Erp'
 import Proposta from '../cadastros/propostas/Proposta'
 import Proposta2 from '../cadastros/propostas2/Proposta'
+import PessoaNew from '../cadastros/propostas2/Pessoa'
 
 const Rotas = () => {
   return (
@@ -42,6 +43,7 @@ const Rotas = () => {
         {/* Proposta */}
         <Route exact path="/proposta" component={Proposta} />
         <Route exact path="/proposta2" component={Proposta2} />
+        <Route exact path="/pessoanew" component={PessoaNew} />
         {/* Portal */}
         <Route exact path="/portal/poempreendimentoall" component={PoEmpreendimentoAll} />
         <Route exact path="/portal/poempreendimentoslista" component={PoEmpreendimentosLista} />

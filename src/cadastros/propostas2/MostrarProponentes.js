@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import clienteAxios from '../../config/axios'
 
@@ -109,8 +110,17 @@ const MostrarProponentes = ({ titulo, setExibirModalProponente, exibirModalPropo
                     imob => <div className="linha" onClick={() => handleSelecionar(imob)}>{imob.nome}</div>
                 )}
             </div>
-            <div className="text-right">
-                <Button sm={2} className="btn col-2" onClick={() => setExibirModalProponente(false)}>Fechar</Button>
+            <div className="d-flex mt-2 ">
+                <div>
+                    <Link to={"/pessoanew"} className="btn btn-primary" style={{width: '100px'}} >
+                        Cadastrar
+                    </Link>
+                </div>
+                <Col sm={7} />
+                <div className="text-right">
+                    <Button sm={2} className="btn btn-primary"  style={{width: '100px'}} onClick={() => setExibirModalProponente(false)}>Fechar</Button>
+
+                </div>
 
             </div>
 

@@ -4,6 +4,7 @@ import clienteAxios from '../../config/axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faMinus, faPlus, faStepForward, faStepBackward, faFastForward, faFastBackward } from '@fortawesome/free-solid-svg-icons'
 import './propo.css'
+import Moment from 'moment'
 
 import { PropostaContext } from './Proposta'
 
@@ -76,7 +77,7 @@ const PropostaNavegacao = () => {
             <div className="topo-fixo">
                 <div className="nav-linha">
                     <div className="w-25" style={{ color: 'white', lineHeight: '50px'}}>Número do Proposta : <span style={{fontSize: '1.3rem'}}>{id_proposta}</span> </div>
-                    <div className="w-25" style={{ color: 'white', lineHeight: '50px' }}>Data : <span style={{fontSize: '1.3rem'}}>{data}</span> </div>
+                    <div className="w-25" style={{ color: 'white', lineHeight: '50px' }}>Data : <span style={{fontSize: '1.3rem'}}>{Moment(data).format('DD/MM/YYYY')}</span> </div>
                     <div className="w-25" >
                         <div style={{ marginTop: '9px' }}>
 
@@ -99,9 +100,7 @@ const PropostaNavegacao = () => {
                                 style={{ border: 'none', backgroundColor: 'transparent', color: 'white', padding: '6px 9px', borderRadius: '3px', marginLeft: "5px" }}
                                 onClick={(e) => lastProposta(e)}
                             ><FontAwesomeIcon icon={faFastForward} /></button>
-
-
-
+                            
                         </div>
                         
                     </div>
