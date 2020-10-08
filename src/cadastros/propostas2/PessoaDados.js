@@ -43,7 +43,7 @@ const PessoaDados = ({ tipo_pessoa }) => {
 
                     <Jumbotron
                         fluid
-                        style={{marginTop: 0, paddingTop: 0, paddingLeft: '15px'}}
+                        style={{marginTop: 0, marginBottom: 0, paddingTop: 0, paddingLeft: '15px'}}
                     >
 
                     {/* CPF/CNPJ */}

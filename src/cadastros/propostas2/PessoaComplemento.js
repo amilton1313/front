@@ -26,19 +26,9 @@ const PessoaDados = ({ titulo1, titulo2, tipo_pessoa }) => {
     const [tempo_empresa, setTempoEmpresa] = useState('')
     const [cargo, setCargo] = useState('')
     const [remuneracao, setRemuneracao] = useState('')
-
-
-    const [endereco, setEndereco] = useState('')
-    const [complemento, setComplemento] = useState('')
-    const [bairro, setBairro] = useState('')
-    const [municipio, setMunicipio] = useState('')
-    const [uf, setUF] = useState('')
-    const [banco, setBanco] = useState('')
-    const [agencia, setAgencia] = useState('')
-    const [conta, setConta] = useState('')
-
-    const cpfRef = useRef()
-
+    const [financ_valor, setFinancValor] = useState('')
+    const [financ_prazo, setFinancPrazo] = useState('')
+    const [financ_descricao, setFinancDescricao] = useState('')
 
     useEffect(() => {
         document.getElementById('sexo1').checked = sexo === 1
@@ -499,108 +489,65 @@ const PessoaDados = ({ titulo1, titulo2, tipo_pessoa }) => {
                             Comprometimento da Renda Familiar
                         </div>
 
-                        {/* Percentual */}
+                        
+                        
+
+                        {/* Financ Percentual */}
                         <Form.Group
                             as={Row}
                             className="gr"
                         >
-                            <Form.Label column sm={2} className="lab">Percentual : </Form.Label>
-                            <Col sm={7}>
-                                <Form.Control as="select"
-                                    size="sm"
-                                    name="uf"
-                                    className="cont"
-                                    value={uf}
-                                    onChange={e => setUF(e.target.value)}
-                                >
-                                    <option value="SC">Santa Catarina</option>
-                                    <option value="AC">Acre</option>
-                                    <option value="AL">Alagoas</option>
-                                    <option value="AP">Amapá</option>
-                                    <option value="AM">Amazonas</option>
-                                    <option value="BA">Bahia</option>
-                                    <option value="CE">Ceará</option>
-                                    <option value="DF">Distrito Federal</option>
-                                    <option value="ES">Espírito Santo</option>
-                                    <option value="GO">Goiás</option>
-                                    <option value="MA">Maranhão</option>
-                                    <option value="MT">Mato Grosso</option>
-                                    <option value="MS">Mato Grosso do Sul</option>
-                                    <option value="MG">Minas Gerais</option>
-                                    <option value="PA">Pará</option>
-                                    <option value="PB">Paraíba</option>
-                                    <option value="PR">Paraná</option>
-                                    <option value="PE">Pernambuco</option>
-                                    <option value="PI">Piauí</option>
-                                    <option value="RJ">Rio de Janeiro</option>
-                                    <option value="RN">Rio Grande do Norte</option>
-                                    <option value="RS">Rio Grande do Sul</option>
-                                    <option value="RO">Rondônia</option>
-                                    <option value="RR">Roraima</option>
-                                    <option value="SP">São Paulo</option>
-                                    <option value="SE">Sergipe</option>
-                                    <option value="TO">Tocantins</option>
-                                </Form.Control>
-                            </Col>
-
-                        </Form.Group>
-
-                        {/* Banco */}
-                        <Form.Group
-                            as={Row}
-                            className="gr"
-                        >
-                            <Form.Label size="sm" column sm={2} className="lab">Banco : </Form.Label>
+                            <Form.Label size="sm" column sm={2} className="lab">Percentual : </Form.Label>
                             <Col sm={3}>
                                 <Form.Control
                                     size="sm"
                                     type="text"
-                                    placeholder="Digite o nome do banco"
-                                    name="banco"
-                                    className="cont"
-                                    value={banco}
+                                    placeholder="Digite o percentual"
+                                    name="financ_valor"
+                                    className="financ_valor"
+                                    value={financ_valor}
                                     autoComplete="off"
-                                    onChange={e => setBanco(e.target.value)}
+                                    onChange={e => setFinancValor(e.target.value)}
                                 />
                             </Col>
                         </Form.Group>
 
-                        {/* Agência */}
+                        {/* Financ Prazo */}
                         <Form.Group
                             as={Row}
                             className="gr"
                         >
-                            <Form.Label size="sm" column sm={2} className="lab">Agência : </Form.Label>
+                            <Form.Label size="sm" column sm={2} className="lab">Prazo : </Form.Label>
                             <Col sm={3}>
                                 <Form.Control
                                     size="sm"
                                     type="text"
-                                    placeholder="Digite o número da agência"
-                                    name="agencia"
-                                    className="cont"
-                                    value={agencia}
+                                    placeholder="Digite o prazo"
+                                    name="financ_prazo"
+                                    className="financ_prazo"
+                                    value={financ_prazo}
                                     autoComplete="off"
-                                    onChange={e => setAgencia(e.target.value)}
+                                    onChange={e => setFinancPrazo(e.target.value)}
                                 />
                             </Col>
                         </Form.Group>
 
-                        {/* Conta Corrente */}
+                        {/* Financ Descrição */}
                         <Form.Group
                             as={Row}
                             className="gr"
                         >
-                            <Form.Label size="sm" column sm={2} className="lab">Conta Corrente : </Form.Label>
+                            <Form.Label size="sm" column sm={2} className="lab">Descrição : </Form.Label>
                             <Col sm={3}>
                                 <Form.Control
                                     size="sm"
                                     type="text"
-                                    placeholder="Digite o número da conta corrente"
-                                    name="conta"
-                                    className="cont"
-                                    value={conta}
+                                    placeholder="Digite a descrição"
+                                    name="financ_descricao"
+                                    className="financ_descricao"
+                                    value={financ_descricao}
                                     autoComplete="off"
-                                    onChange={e => setConta(e.target.value)}
+                                    onChange={e => setFinancDescricao(e.target.value)}
                                 />
                             </Col>
                         </Form.Group>
